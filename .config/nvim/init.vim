@@ -11,8 +11,8 @@ set noshowmode
 set clipboard+=unnamedplus
 
 " Quickly insert an empty new line without entering insert mode
-    nnoremap <Leader>o o<Esc>
-    nnoremap <Leader>O O<Esc>
+    nnoremap <Leader>o o<Esc>0"_D
+    nnoremap <Leader>O O<Esc>0"_D
 
 lua require('config')
 lua require('plugins')
