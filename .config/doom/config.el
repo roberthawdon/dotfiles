@@ -65,10 +65,30 @@
 
 (use-package emojify
   :hook (after-init . global-emojify-mode))
+(map! :leader
+      :desc "Toggle emojify" "t e" #'global-emojify-mode)
 
-(setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
-      doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
-      doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))
+(when window-system
+  (if  (eq system-type 'darwin)
+    (setq doom-font "VictorMono Nerd Font")
+    (setq doom-variable-pitch-font "Annai MN")
+    (setq doom-big-font "VictorMono Nerd Font"))
+  (if   (eq system-type 'gnu/linux)
+    (setq doom-font "VictorMono Nerd Font"))
+    (setq doom-variable-pitch-font "Annai MN")
+    (setq doom-big-font "VictorMono Nerd Font"))
+
+  (if (> (display-pixel-height) 1080)
+    (setq doom-font-size 24)
+    (setq doom-variable-pitch-font-size 30)
+    (setq doom-big-font-size 48))
+  (if (<= (display-pixel-height) 1080)
+    (setq doom-font-size 12)
+    (setq doom-variable-pitch-font-size 15)
+    (setq doom-big-font-size 24))
+;; (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
+;;       doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
+;;       doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))
@@ -102,7 +122,7 @@
       (:prefix ("t" . "toggle")
        :desc "Toggle minimap-mode" "m" #'minimap-mode))
 
-(set-face-attribute 'mode-line nil :font "VictorMono Nerd Font-12")
+(set-face-attribute 'mode-line nil :font "VictorMono Nerd Font")
 (setq doom-modeline-height 12     ;; sets modeline height
       doom-modeline-bar-width 5   ;; sets right bar width
       doom-modeline-persp-name t  ;; adds perspective name to modeline
