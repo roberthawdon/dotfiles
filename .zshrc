@@ -88,6 +88,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+export PATH=$HOME/.config/emacs/bin:$PATH
+
 alias s=show
 alias sr="show --running"
 alias git=hub
