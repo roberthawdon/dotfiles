@@ -183,9 +183,9 @@
                                   (?D . "⬇ [Low Priority]")
                                   (?E . "☕ [Non Priority]")
                                   (?F . "⚡ [P1]")
-                                  (?G . "🌧️ [P2]")
-                                  (?H . "☁️ [P3]")
-                                  (?I . "☀️ [P4]"))
+                                  (?G . "🌧 [P2]")
+                                  (?H . "☁ [P3]")
+                                  (?I . "☀ [P4]"))
      org-priority-faces
      '((?A :foreground "#ff6c6b" :weight bold)
        (?B :foreground "#ff6c6b" :weight bold)
