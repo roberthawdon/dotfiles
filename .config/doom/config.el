@@ -176,11 +176,26 @@
   (setq
      ;; org-fancy-priorities-list '("[A]" "[B]" "[C]")
      ;; org-fancy-priorities-list '("❗" "[B]" "[C]")
-     org-fancy-priorities-list '("🟥" "🟧" "🟨")
+     ;; org-fancy-priorities-list '("🟥" "🟧" "🟨")
+     org-fancy-priorities-list '((?A . "❗ [Highest Priority]")
+                                  (?B . "⬆ [High Priority]")
+                                  (?C . "↕ [Medium Priority]")
+                                  (?D . "⬇ [Low Priority]")
+                                  (?E . "☕ [Non Priority]")
+                                  (?F . "⚡ [P1]")
+                                  (?G . "⮬ [P2]")
+                                  (?H . "⮮ [P3]")
+                                  (?I . "☕ [P4]"))
      org-priority-faces
      '((?A :foreground "#ff6c6b" :weight bold)
-       (?B :foreground "#98be65" :weight bold)
-       (?C :foreground "#c678dd" :weight bold))
+       (?B :foreground "#ff6c6b" :weight bold)
+       (?C :foreground "#98be65" :weight bold)
+       (?D :foreground "#c678dd" :weight bold)
+       (?E :foreground "#c678dd" :weight bold)
+       (?F :foreground "#ff6c6b" :weight bold)
+       (?G :foreground "#98be65" :weight bold)
+       (?H :foreground "#98be65" :weight bold)
+       (?I :foreground "#c678dd" :weight bold))
      org-agenda-block-separator 8411)
 
   (setq org-agenda-custom-commands
@@ -194,6 +209,9 @@
             (tags "PRIORITY=\"C\""
                   ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                    (org-agenda-overriding-header "Low-priority unfinished tasks:")))
+            (tags "PRIORITY=\"D\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "Non-priority unfinished tasks:")))
             (tags "customtag"
                   ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                    (org-agenda-overriding-header "Tasks marked with customtag:")))
@@ -387,6 +405,11 @@
       org-journal-time-prefix "** "
       org-journal-date-format "%B %d, %Y (%A) "
       org-journal-file-format "%Y-%m-%d.org")
+
+(setq   org-highest-priority ?A
+    org-default-priority ?C
+    org-lowest-priority ?I
+)
 
 (setq initial-buffer-choice "~/.config/doom/start.org")
 
