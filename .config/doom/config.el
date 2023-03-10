@@ -163,7 +163,7 @@
   :config
   (setq org-auto-tangle-default t))
 
-(defun dt/insert-auto-tangle-tag ()
+(defun rh/ginsert-auto-tangle-tag ()
   "Insert auto-tangle tag in a literate config."
   (interactive)
   (evil-org-open-below 1)
@@ -171,10 +171,10 @@
   (evil-force-normal-state))
 
 (map! :leader
-      :desc "Insert auto_tangle tag" "i a" #'dt/insert-auto-tangle-tag)
+      :desc "Insert auto_tangle tag" "i a" #'rh/ginsert-auto-tangle-tag)
 
 (after! org
-    (defun dt/org-colors-doom-one ()
+    (defun rh/gorg-colors-doom-one ()
     "Enable Doom One colors for Org headers."
     (interactive)
     (dolist
@@ -190,7 +190,7 @@
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-dracula ()
+    (defun rh/gorg-colors-dracula ()
     "Enable Dracula colors for Org headers."
     (interactive)
     (dolist
@@ -206,7 +206,7 @@
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-gruvbox-dark ()
+    (defun rh/gorg-colors-gruvbox-dark ()
     "Enable Gruvbox Dark colors for Org headers."
     (interactive)
     (dolist
@@ -222,7 +222,7 @@
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-monokai-pro ()
+    (defun rh/gorg-colors-monokai-pro ()
     "Enable Monokai Pro colors for Org headers."
     (interactive)
     (dolist
@@ -238,7 +238,7 @@
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-nord ()
+    (defun rh/gorg-colors-nord ()
     "Enable Nord colors for Org headers."
     (interactive)
     (dolist
@@ -254,7 +254,7 @@
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-oceanic-next ()
+    (defun rh/gorg-colors-oceanic-next ()
     "Enable Oceanic Next colors for Org headers."
     (interactive)
     (dolist
@@ -270,7 +270,7 @@
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-palenight ()
+    (defun rh/gorg-colors-palenight ()
     "Enable Palenight colors for Org headers."
     (interactive)
     (dolist
@@ -286,7 +286,7 @@
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-solarized-dark ()
+    (defun rh/gorg-colors-solarized-dark ()
     "Enable Solarized Dark colors for Org headers."
     (interactive)
     (dolist
@@ -302,7 +302,7 @@
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-solarized-light ()
+    (defun rh/gorg-colors-solarized-light ()
     "Enable Solarized Light colors for Org headers."
     (interactive)
     (dolist
@@ -318,7 +318,7 @@
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-tomorrow-night ()
+    (defun rh/gorg-colors-tomorrow-night ()
     "Enable Tomorrow Night colors for Org headers."
     (interactive)
     (dolist
@@ -334,6 +334,6 @@
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-  ;; Load our desired dt/org-colors-* theme on startup
-  (dt/org-colors-doom-one)
+  ;; Load our desired rh/gorg-colors-* theme on startup
+  (rh/gorg-colors-doom-one)
 )

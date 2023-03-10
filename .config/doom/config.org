@@ -192,6 +192,8 @@ Setting the theme to doom-one.  To try out new themes, I set a keybinding for co
 * EMOJIS
 Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :).
 
+I have created a toggle for this using the 'SPC t e' keybinding.
+
 #+begin_src emacs-lisp
 (use-package emojify
   :hook (after-init . global-emojify-mode))
@@ -338,7 +340,7 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
 
 ** Org-auto-tangle
 
-=org-auto-tangle= allows you to add the option =#+auto_tangle: t= in your Org file so that it automatically tangles when you save the document.  I have made adding this to your file even easier by creating a function 'dt/insert-auto-tangle-tag' and setting it to a keybinding 'SPC i a'.
+=org-auto-tangle= allows you to add the option =#+auto_tangle: t= in your Org file so that it automatically tangles when you save the document.  I have made adding this to your file even easier by creating a function 'rh/ginsert-auto-tangle-tag' and setting it to a keybinding 'SPC i a'.
 
 #+begin_src emacs-lisp
 (use-package! org-auto-tangle
@@ -347,7 +349,7 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
   :config
   (setq org-auto-tangle-default t))
 
-(defun dt/insert-auto-tangle-tag ()
+(defun rh/ginsert-auto-tangle-tag ()
   "Insert auto-tangle tag in a literate config."
   (interactive)
   (evil-org-open-below 1)
@@ -355,15 +357,15 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
   (evil-force-normal-state))
 
 (map! :leader
-      :desc "Insert auto_tangle tag" "i a" #'dt/insert-auto-tangle-tag)
+      :desc "Insert auto_tangle tag" "i a" #'rh/ginsert-auto-tangle-tag)
 #+end_src
 
 ** Org fonts
-I have created an interactive function for each color scheme (M-x dt/org-colors-*).  These functions will set appropriate colors and font attributes for org-level fonts and the org-table font.
+I have created an interactive function for each color scheme (M-x rh/gorg-colors-*).  These functions will set appropriate colors and font attributes for org-level fonts and the org-table font.
 
 #+begin_src emacs-lisp
 (after! org
-    (defun dt/org-colors-doom-one ()
+    (defun rh/gorg-colors-doom-one ()
     "Enable Doom One colors for Org headers."
     (interactive)
     (dolist
@@ -379,7 +381,7 @@ I have created an interactive function for each color scheme (M-x dt/org-colors-
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-dracula ()
+    (defun rh/gorg-colors-dracula ()
     "Enable Dracula colors for Org headers."
     (interactive)
     (dolist
@@ -395,7 +397,7 @@ I have created an interactive function for each color scheme (M-x dt/org-colors-
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-gruvbox-dark ()
+    (defun rh/gorg-colors-gruvbox-dark ()
     "Enable Gruvbox Dark colors for Org headers."
     (interactive)
     (dolist
@@ -411,7 +413,7 @@ I have created an interactive function for each color scheme (M-x dt/org-colors-
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-monokai-pro ()
+    (defun rh/gorg-colors-monokai-pro ()
     "Enable Monokai Pro colors for Org headers."
     (interactive)
     (dolist
@@ -427,7 +429,7 @@ I have created an interactive function for each color scheme (M-x dt/org-colors-
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-nord ()
+    (defun rh/gorg-colors-nord ()
     "Enable Nord colors for Org headers."
     (interactive)
     (dolist
@@ -443,7 +445,7 @@ I have created an interactive function for each color scheme (M-x dt/org-colors-
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-oceanic-next ()
+    (defun rh/gorg-colors-oceanic-next ()
     "Enable Oceanic Next colors for Org headers."
     (interactive)
     (dolist
@@ -459,7 +461,7 @@ I have created an interactive function for each color scheme (M-x dt/org-colors-
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-palenight ()
+    (defun rh/gorg-colors-palenight ()
     "Enable Palenight colors for Org headers."
     (interactive)
     (dolist
@@ -475,7 +477,7 @@ I have created an interactive function for each color scheme (M-x dt/org-colors-
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-solarized-dark ()
+    (defun rh/gorg-colors-solarized-dark ()
     "Enable Solarized Dark colors for Org headers."
     (interactive)
     (dolist
@@ -491,7 +493,7 @@ I have created an interactive function for each color scheme (M-x dt/org-colors-
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-solarized-light ()
+    (defun rh/gorg-colors-solarized-light ()
     "Enable Solarized Light colors for Org headers."
     (interactive)
     (dolist
@@ -507,7 +509,7 @@ I have created an interactive function for each color scheme (M-x dt/org-colors-
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-    (defun dt/org-colors-tomorrow-night ()
+    (defun rh/gorg-colors-tomorrow-night ()
     "Enable Tomorrow Night colors for Org headers."
     (interactive)
     (dolist
@@ -523,8 +525,8 @@ I have created an interactive function for each color scheme (M-x dt/org-colors-
         (set-face-attribute (nth 0 face) nil :font doom-variable-pitch-font :weight (nth 3 face) :height (nth 1 face) :foreground (nth 2 face)))
         (set-face-attribute 'org-table nil :font doom-font :weight 'normal :height 1.0 :foreground "#bfafdf"))
 
-  ;; Load our desired dt/org-colors-* theme on startup
-  (dt/org-colors-doom-one)
+  ;; Load our desired rh/gorg-colors-* theme on startup
+  (rh/gorg-colors-doom-one)
 )
 #+end_src
 
