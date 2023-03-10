@@ -183,9 +183,9 @@
                                   (?D . "⬇ [Low Priority]")
                                   (?E . "☕ [Non Priority]")
                                   (?F . "⚡ [P1]")
-                                  (?G . "⮬ [P2]")
-                                  (?H . "⮮ [P3]")
-                                  (?I . "☕ [P4]"))
+                                  (?G . "🌧️ [P2]")
+                                  (?H . "☁️ [P3]")
+                                  (?I . "☀️ [P4]"))
      org-priority-faces
      '((?A :foreground "#ff6c6b" :weight bold)
        (?B :foreground "#ff6c6b" :weight bold)
@@ -201,19 +201,34 @@
   (setq org-agenda-custom-commands
         '(("v" "A better agenda view"
            ((tags "PRIORITY=\"A\""
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                   (org-agenda-overriding-header "High-priority unfinished tasks:")))
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
+                   (org-agenda-overriding-header "Highest-priority unfinished tasks:")))
             (tags "PRIORITY=\"B\""
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                   (org-agenda-overriding-header "Medium-priority unfinished tasks:")))
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
+                   (org-agenda-overriding-header "High-priority unfinished tasks:")))
             (tags "PRIORITY=\"C\""
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                   (org-agenda-overriding-header "Low-priority unfinished tasks:")))
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
+                   (org-agenda-overriding-header "Medium-priority unfinished tasks:")))
             (tags "PRIORITY=\"D\""
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
+                   (org-agenda-overriding-header "Low-priority unfinished tasks:")))
+            (tags "PRIORITY=\"E\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
                    (org-agenda-overriding-header "Non-priority unfinished tasks:")))
+            (tags "PRIORITY=\"F\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
+                   (org-agenda-overriding-header "Open P1 Incidents:")))
+            (tags "PRIORITY=\"G\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
+                   (org-agenda-overriding-header "Open P2 Incidents:")))
+            (tags "PRIORITY=\"H\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
+                   (org-agenda-overriding-header "Open P3 Incidents:")))
+            (tags "PRIORITY=\"I\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
+                   (org-agenda-overriding-header "Open P4 Incidents:")))
             (tags "customtag"
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
                    (org-agenda-overriding-header "Tasks marked with customtag:")))
 
             (agenda "")
