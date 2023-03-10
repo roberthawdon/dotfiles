@@ -14,6 +14,7 @@
 (package! dashboard)
 (package! emojify)
 (package! org-auto-tangle)
+(package! org-fancy-priorities)
 (package! org-web-tools)
 
 ;; To install a package directly from a remote git repo, you must specify a

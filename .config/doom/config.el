@@ -117,6 +117,8 @@
  '(markdown-header-face-5 ((t (:inherit markdown-header-face :height 1.3))))
  '(markdown-header-face-6 ((t (:inherit markdown-header-face :height 1.2)))))
 
+(add-hook 'window-setup-hook #'toggle-frame-maximized)
+
 (setq minimap-window-location 'right)
 (map! :leader
       (:prefix ("t" . "toggle")
@@ -129,13 +131,25 @@
       doom-modeline-persp-icon t) ;; adds folder icon next to persp name
 
 (map! :leader
+      (:prefix ("=" . "open file")
+       :desc "Edit start.org (start page)" "=" #'(lambda () (interactive) (find-file "~/.config/doom/start.org"))
+       :desc "Edit doom config.org"        "c" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+       :desc "Edit doom init.el"           "i" #'(lambda () (interactive) (find-file "~/.config/doom/init.el"))
+       :desc "Edit doom packages.el"       "p" #'(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
+       (:prefix ("a" . "Edit agendas")
+       :desc "Edit work agenda"            "w" #'(lambda () (interactive) (find-file "~/Dropbox/Shared between work and personal Dropbox/Org/agendas/work.org"))
+       :desc "Edit personal agenda"        "p" #'(lambda () (interactive) (find-file "~/Dropbox/Shared between work and personal Dropbox/Org/agendas/personal.org")))))
+
+(map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
 (after! org
-  (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
+  (setq org-directory "~/Dropbox/Shared between work and personal Dropbox/Org/"
+        org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-ellipsis " ▼ "
         org-superstar-headline-bullets-list '("◉" "●" "○" "◆" "●" "○" "◆")
         org-superstar-itembullet-alist '((?+ . ?➤) (?- . ?✦)) ; changes +/- symbols in item lists
-        org-log-done 'time
+        ;; org-log-done 'time
+        org-log-done 'note
         org-hide-emphasis-markers t
         ;; ex. of org-link-abbrev-alist in action
         ;; [[arch-wiki:Name_of_Page][Description]]
@@ -148,14 +162,44 @@
         org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
           '((sequence
              "TODO(t)"           ; A task that is ready to be tackled
-             "BLOG(b)"           ; Blog writing assignments
-             "GYM(g)"            ; Things to accomplish at the gym
              "PROJ(p)"           ; A project that contains other tasks
-             "VIDEO(v)"          ; Video assignments
+             "BLOG(b)"           ; Blog writing assignments
              "WAIT(w)"           ; Something is holding up this task
              "|"                 ; The pipe necessary to separate "active" states and "inactive" states
              "DONE(d)"           ; Task has been completed
              "CANCELLED(c)" )))) ; Task has been cancelled
+
+(after! org
+  (setq org-agenda-files '("~/Dropbox/Shared between work and personal Dropbox/Org/agendas/")))
+
+(after! org-fancy-priorities
+  (setq
+     ;; org-fancy-priorities-list '("[A]" "[B]" "[C]")
+     ;; org-fancy-priorities-list '("❗" "[B]" "[C]")
+     org-fancy-priorities-list '("🟥" "🟧" "🟨")
+     org-priority-faces
+     '((?A :foreground "#ff6c6b" :weight bold)
+       (?B :foreground "#98be65" :weight bold)
+       (?C :foreground "#c678dd" :weight bold))
+     org-agenda-block-separator 8411)
+
+  (setq org-agenda-custom-commands
+        '(("v" "A better agenda view"
+           ((tags "PRIORITY=\"A\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "High-priority unfinished tasks:")))
+            (tags "PRIORITY=\"B\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "Medium-priority unfinished tasks:")))
+            (tags "PRIORITY=\"C\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "Low-priority unfinished tasks:")))
+            (tags "customtag"
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "Tasks marked with customtag:")))
+
+            (agenda "")
+            (alltodo ""))))))
 
 (use-package! org-auto-tangle
   :defer t
@@ -337,3 +381,27 @@
   ;; Load our desired rh/gorg-colors-* theme on startup
   (rh/gorg-colors-doom-one)
 )
+
+(setq org-journal-dir "~/Dropbox/Shared between work and personal Dropbox/Org/journal/"
+      org-journal-date-prefix "* "
+      org-journal-time-prefix "** "
+      org-journal-date-format "%B %d, %Y (%A) "
+      org-journal-file-format "%Y-%m-%d.org")
+
+(setq initial-buffer-choice "~/.config/doom/start.org")
+
+(define-minor-mode start-mode
+  "Provide functions for custom start page."
+  :lighter " start"
+  :keymap (let ((map (make-sparse-keymap)))
+          ;;(define-key map (kbd "M-z") 'eshell)
+            (evil-define-key 'normal start-mode-map
+              (kbd "1") '(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+              (kbd "2") '(lambda () (interactive) (find-file "~/.config/doom/init.el"))
+              (kbd "3") '(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
+              (kbd "4") '(lambda () (interactive) (find-file "~/.config/doom/eshell/aliases"))
+              (kbd "5") '(lambda () (interactive) (find-file "~/.config/doom/eshell/profile")))
+          map))
+
+(add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
+(provide 'start-mode)

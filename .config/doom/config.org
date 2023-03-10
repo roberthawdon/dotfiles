@@ -20,11 +20,16 @@
 - [[#magit][MAGIT]]
 - [[#neotree][NEOTREE]]
 - [[#markdown][MARKDOWN]]
+- [[#maximise-at-start][MAXIMISE AT START]]
 - [[#minimap][MINIMAP]]
 - [[#modeline][MODELINE]]
+- [[#open-specific-files][OPEN SPECIFIC FILES]]
 - [[#org-mode][ORG MODE]]
+  - [[#org-agenda][Org-agenda]]
   - [[#org-auto-tangle][Org-auto-tangle]]
   - [[#org-fonts][Org fonts]]
+  - [[#org-journal][Org-journal]]
+- [[#start-page][START PAGE]]
 
 * ABOUT THIS CONFIG
 This is my personal Doom Emacs config.
@@ -277,6 +282,14 @@ Neotree is a file tree viewer.  When you open neotree, it jumps to the current f
  '(markdown-header-face-6 ((t (:inherit markdown-header-face :height 1.2)))))
 #+end_src
 
+* MAXIMISE AT START
+
+I quite like Emacs to use the full screen at start, so lets add the following to make that dream a reality.
+
+#+begin_src emacs-lisp
+(add-hook 'window-setup-hook #'toggle-frame-maximized)
+#+end_src
+
 * MINIMAP
 A minimap sidebar displaying a smaller version of the current buffer on either the left or right side. It highlights the currently shown region and updates its position automatically.  Be aware that this minimap program does not work in Org documents.  This is not unusual though because I have tried several minimap programs and none of them can handle Org.
 
@@ -303,19 +316,50 @@ https://github.com/seagle0128/doom-modeline
       doom-modeline-persp-icon t) ;; adds folder icon next to persp name
 #+end_src
 
+* OPEN SPECIFIC FILES
+
+Keybindings to open files that I work with all the time using the find-file command, which is the interactive file search that opens with 'C-x C-f' in GNU Emacs or 'SPC f f' in Doom Emacs.  These keybindings use find-file non-interactively since we specify exactly what file to open.  The format I use for these bindings is 'SPC =' plus 'key' since Doom Emacs does not use 'SPC ='.
+
+=NOTE=: Doom Emacs already has a function 'doom/open-private-config' set to the keybinding 'SPC f p'.  This allows you to open any file in your HOME/.config/doom directory, so the following keybindings that I created are not really necessary, but I created this section as an example of how to to create bindings that open specific files on your system.
+
+| PATH TO FILE                                                                | DESCRIPTION                 | KEYBINDING |
+|-----------------------------------------------------------------------------+-----------------------------+------------|
+| ~/.config/doom/start.org                                                    | /Edit start.org (start page)/ | SPC = =    |
+| ~/.config/doom/config.org                                                   | /Edit doom config.org/        | SPC = c    |
+| ~/.config/doom/init.el                                                      | /Edit doom init.el/           | SPC = i    |
+| ~/.config/doom/packages.el                                                  | /Edit doom packages.el/       | SPC = p    |
+| ~/Dropbox/Shared between work and personal Dropbox/Org/agendas/work.org     | Edit work agenda file       | SPC = a w  |
+| ~/Dropbox/Shared between work and personal Dropbox/Org/agendas/personal.org | Edit personal agenda file   | SPC = a p  |
+
+#+BEGIN_SRC emacs-lisp
+(map! :leader
+      (:prefix ("=" . "open file")
+       :desc "Edit start.org (start page)" "=" #'(lambda () (interactive) (find-file "~/.config/doom/start.org"))
+       :desc "Edit doom config.org"        "c" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+       :desc "Edit doom init.el"           "i" #'(lambda () (interactive) (find-file "~/.config/doom/init.el"))
+       :desc "Edit doom packages.el"       "p" #'(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
+       (:prefix ("a" . "Edit agendas")
+       :desc "Edit work agenda"            "w" #'(lambda () (interactive) (find-file "~/Dropbox/Shared between work and personal Dropbox/Org/agendas/work.org"))
+       :desc "Edit personal agenda"        "p" #'(lambda () (interactive) (find-file "~/Dropbox/Shared between work and personal Dropbox/Org/agendas/personal.org")))))
+#+END_SRC
+
 * ORG MODE
 
 This is config for Org Mode, it has been mainly wrapped in `(after! org)` as without it, it may load in before Doom's config and get overritten later. I have also enabled org-journal, org-superstar and org-roam by adding (+journal +pretty +roam2) to the org section of my Doom Emacs init.el.
+
+=Note:= I have set my org-directory to a directory in Dropbox which is shared between my personal and work account. The idea here is to be able to sync my Org work between my personal and work machines.
 
 #+begin_src emacs-lisp
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
 (after! org
-  (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
+  (setq org-directory "~/Dropbox/Shared between work and personal Dropbox/Org/"
+        org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-ellipsis " ▼ "
         org-superstar-headline-bullets-list '("◉" "●" "○" "◆" "●" "○" "◆")
         org-superstar-itembullet-alist '((?+ . ?➤) (?- . ?✦)) ; changes +/- symbols in item lists
-        org-log-done 'time
+        ;; org-log-done 'time
+        org-log-done 'note
         org-hide-emphasis-markers t
         ;; ex. of org-link-abbrev-alist in action
         ;; [[arch-wiki:Name_of_Page][Description]]
@@ -328,14 +372,48 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
         org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
           '((sequence
              "TODO(t)"           ; A task that is ready to be tackled
-             "BLOG(b)"           ; Blog writing assignments
-             "GYM(g)"            ; Things to accomplish at the gym
              "PROJ(p)"           ; A project that contains other tasks
-             "VIDEO(v)"          ; Video assignments
+             "BLOG(b)"           ; Blog writing assignments
              "WAIT(w)"           ; Something is holding up this task
              "|"                 ; The pipe necessary to separate "active" states and "inactive" states
              "DONE(d)"           ; Task has been completed
              "CANCELLED(c)" )))) ; Task has been cancelled
+#+end_src
+
+** Org-agenda
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-agenda-files '("~/Dropbox/Shared between work and personal Dropbox/Org/agendas/")))
+
+(after! org-fancy-priorities
+  (setq
+     ;; org-fancy-priorities-list '("[A]" "[B]" "[C]")
+     ;; org-fancy-priorities-list '("❗" "[B]" "[C]")
+     org-fancy-priorities-list '("🟥" "🟧" "🟨")
+     org-priority-faces
+     '((?A :foreground "#ff6c6b" :weight bold)
+       (?B :foreground "#98be65" :weight bold)
+       (?C :foreground "#c678dd" :weight bold))
+     org-agenda-block-separator 8411)
+
+  (setq org-agenda-custom-commands
+        '(("v" "A better agenda view"
+           ((tags "PRIORITY=\"A\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "High-priority unfinished tasks:")))
+            (tags "PRIORITY=\"B\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "Medium-priority unfinished tasks:")))
+            (tags "PRIORITY=\"C\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "Low-priority unfinished tasks:")))
+            (tags "customtag"
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "Tasks marked with customtag:")))
+
+            (agenda "")
+            (alltodo ""))))))
 #+end_src
 
 ** Org-auto-tangle
@@ -530,3 +608,34 @@ I have created an interactive function for each color scheme (M-x rh/gorg-colors
 )
 #+end_src
 
+** Org-journal
+#+begin_src emacs-lisp
+(setq org-journal-dir "~/Dropbox/Shared between work and personal Dropbox/Org/journal/"
+      org-journal-date-prefix "* "
+      org-journal-time-prefix "** "
+      org-journal-date-format "%B %d, %Y (%A) "
+      org-journal-file-format "%Y-%m-%d.org")
+#+end_src
+
+* START PAGE
+Instead of using Doom's Dashboard or the Emacs Dashboard program, I have decided to just set an custom start file as my "dashboard" since it allows me more customization options.  I have added to the 'start-mode-hook' the argument 'read-only-mode'.  This is to prevent accidental editing of the start file, and to prevent clashes with the 'start-mode' specific keybindings.  You can toggle on/off read-only-mode with 'SPC t r'.
+
+#+begin_src emacs-lisp
+(setq initial-buffer-choice "~/.config/doom/start.org")
+
+(define-minor-mode start-mode
+  "Provide functions for custom start page."
+  :lighter " start"
+  :keymap (let ((map (make-sparse-keymap)))
+          ;;(define-key map (kbd "M-z") 'eshell)
+            (evil-define-key 'normal start-mode-map
+              (kbd "1") '(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+              (kbd "2") '(lambda () (interactive) (find-file "~/.config/doom/init.el"))
+              (kbd "3") '(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
+              (kbd "4") '(lambda () (interactive) (find-file "~/.config/doom/eshell/aliases"))
+              (kbd "5") '(lambda () (interactive) (find-file "~/.config/doom/eshell/profile")))
+          map))
+
+(add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
+(provide 'start-mode)
+#+end_src
