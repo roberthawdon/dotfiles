@@ -426,6 +426,19 @@
     org-lowest-priority ?I
 )
 
+(after! org
+  (setq org-roam-directory "~/Dropbox/Shared between work and personal Dropbox/Org/roam/"
+        org-roam-graph-viewer "brave"))
+
+(map! :leader
+      (:prefix ("n r" . "org-roam")
+       :desc "Completion at point" "c" #'completion-at-point
+       :desc "Find node"           "f" #'org-roam-node-find
+       :desc "Show graph"          "g" #'org-roam-graph
+       :desc "Insert node"         "i" #'org-roam-node-insert
+       :desc "Capture to node"     "n" #'org-roam-capture
+       :desc "Toggle roam buffer"  "r" #'org-roam-buffer-toggle))
+
 (setq initial-buffer-choice "~/.config/doom/start.org")
 
 (define-minor-mode start-mode
