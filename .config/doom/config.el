@@ -164,6 +164,7 @@
              "TODO(t)"           ; A task that is ready to be tackled
              "PROJ(p)"           ; A project that contains other tasks
              "BLOG(b)"           ; Blog writing assignments
+             "DOCUMENT(d)"       ; Document writing assignments (split sections into tasks)
              "WAIT(w)"           ; Something is holding up this task
              "|"                 ; The pipe necessary to separate "active" states and "inactive" states
              "DONE(d)"           ; Task has been completed
