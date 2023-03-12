@@ -137,13 +137,13 @@
        :desc "Edit doom init.el"           "i" #'(lambda () (interactive) (find-file "~/.config/doom/init.el"))
        :desc "Edit doom packages.el"       "p" #'(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
        (:prefix ("a" . "Edit agendas")
-       :desc "Edit work agenda"            "w" #'(lambda () (interactive) (find-file "~/Dropbox/Shared between work and personal Dropbox/Org/agendas/work.org"))
-       :desc "Edit personal agenda"        "p" #'(lambda () (interactive) (find-file "~/Dropbox/Shared between work and personal Dropbox/Org/agendas/personal.org")))))
+       :desc "Edit work agenda"            "w" #'(lambda () (interactive) (find-file "~/Org/agendas/work.org"))
+       :desc "Edit personal agenda"        "p" #'(lambda () (interactive) (find-file "~/Org/agendas/personal.org")))))
 
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
 (after! org
-  (setq org-directory "~/Dropbox/Shared between work and personal Dropbox/Org/"
+  (setq org-directory "~/Org/"
         org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-ellipsis " ▼ "
         org-superstar-headline-bullets-list '("◉" "●" "○" "◆" "●" "○" "◆")
@@ -171,7 +171,7 @@
              "CANCELLED(c)" )))) ; Task has been cancelled
 
 (after! org
-  (setq org-agenda-files '("~/Dropbox/Shared between work and personal Dropbox/Org/agendas/")))
+  (setq org-agenda-files '("~/Org/agendas/")))
 
 (after! org-fancy-priorities
   (setq
@@ -416,7 +416,7 @@
   (rh/gorg-colors-doom-one)
 )
 
-(setq org-journal-dir "~/Dropbox/Shared between work and personal Dropbox/Org/journal/"
+(setq org-journal-dir "~/Org/journal/"
       org-journal-date-prefix "* "
       org-journal-time-prefix "** "
       org-journal-date-format "%B %d, %Y (%A) "
@@ -428,7 +428,7 @@
 )
 
 (after! org
-  (setq org-roam-directory "~/Dropbox/Shared between work and personal Dropbox/Org/roam/"
+  (setq org-roam-directory "~/Org/roam/"
         org-roam-graph-viewer "brave"))
 
 (map! :leader
