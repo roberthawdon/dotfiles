@@ -17,8 +17,8 @@
 - [[#doom-theme][DOOM THEME]]
 - [[#emojis][EMOJIS]]
 - [[#fonts][FONTS]]
-- [[#magit][MAGIT]]
 - [[#neotree][NEOTREE]]
+- [[#magit][MAGIT]]
 - [[#markdown][MARKDOWN]]
 - [[#maximise-at-start][MAXIMISE AT START]]
 - [[#minimap][MINIMAP]]
@@ -248,6 +248,21 @@ I have also attempted to account for HiDPI displays by doubling the font size if
   '(font-lock-keyword-face :slant italic))
 #+END_SRC
 
+* NEOTREE
+
+Neotree is a file tree viewer.  When you open neotree, it jumps to the current file thanks to neo-smart-open.  The neo-window-fixed-size setting makes the neotree width be adjustable.  Doom Emacs had no keybindings set for neotree.  Since Doom Emacs uses ‘SPC t’ for ‘toggle’ keybindings, I used ‘SPC t n’ for toggle-neotree.
+
+#+begin_src emacs-lisp
+(after! neotree
+  (setq neo-smart-open t
+        neo-window-fixed-size nil))
+;;(after! doom-themes
+;;  (setq doom-neotree-enable-variable-pitch t))
+(map! :leader
+      :desc "Toggle neotree file viewer" "t n" #'neotree-toggle
+      :desc "Open directory in neotree"  "d n" #'neotree-dir)
+#+end_src
+
 * MAGIT
 
 Magit is the Emacs built in Git manager, practially everything you can do in git on the command line can be done with Magit.
@@ -269,21 +284,6 @@ However, there doesn't appear to be keybindings for, what I'd call, essential gi
       :desc "Magit log"    "g L" #'magit-log ;; Override Doom Emacs's default
       :desc "Magit rebase" "g r" #'magit-rebase ;; Override Doom Emacs's default
       :desc "Magit reset"  "g R" #'magit-reset) ;; Override Doom Emacs's default
-#+end_src
-
-* NEOTREE
-
-Neotree is a file tree viewer.  When you open neotree, it jumps to the current file thanks to neo-smart-open.  The neo-window-fixed-size setting makes the neotree width be adjustable.  Doom Emacs had no keybindings set for neotree.  Since Doom Emacs uses ‘SPC t’ for ‘toggle’ keybindings, I used ‘SPC t n’ for toggle-neotree.
-
-#+begin_src emacs-lisp
-(after! neotree
-  (setq neo-smart-open t
-        neo-window-fixed-size nil))
-;;(after! doom-themes
-;;  (setq doom-neotree-enable-variable-pitch t))
-(map! :leader
-      :desc "Toggle neotree file viewer" "t n" #'neotree-toggle
-      :desc "Open directory in neotree"  "d n" #'neotree-dir)
 #+end_src
 
 * MARKDOWN
