@@ -97,7 +97,9 @@
   '(font-lock-keyword-face :slant italic))
 
 (map! :leader
-      :desc "Magit pull" "g p" #'magit-pull)
+      :desc "Magit pull" "g p" #'magit-pull
+      :desc "Magit push" "g P" #'magit-push
+      :desc "Magit log"  "g L" #'magit-log) ;; Override Doom Emacs's default
 
 (after! neotree
   (setq neo-smart-open t

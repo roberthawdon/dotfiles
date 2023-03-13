@@ -34,7 +34,7 @@
 - [[#start-page][START PAGE]]
 
 * ABOUT THIS CONFIG
-This is my personal Doom Emacs config.
+This is my personal Doom Emacs config. Based heavily on the work of Derek Taylor (https://gitlab.com/dwt1/dotfiles) with a few modifications to suit my needs.
 
 * BEACON
 
@@ -250,11 +250,14 @@ I have also attempted to account for HiDPI displays by doubling the font size if
 
 * MAGIT
 
-Magit is the Emacs built in Git manager, practially everything you can do in git on the command line can be done with Magit. However, there doesn't appear to be a keybinding for a git pull in Doom Emacs. So lets set one up here:
+Magit is the Emacs built in Git manager, practially everything you can do in git on the command line can be done with Magit. However, there doesn't appear to be a keybinding for a git pull or pull in Doom Emacs.
+Also, there's no keybinding for =git log= so we're going to override the default keybinding with one for magit-log.
 
 #+begin_src emacs-lisp
 (map! :leader
-      :desc "Magit pull" "g p" #'magit-pull)
+      :desc "Magit pull" "g p" #'magit-pull
+      :desc "Magit push" "g P" #'magit-push
+      :desc "Magit log"  "g L" #'magit-log) ;; Override Doom Emacs's default
 #+end_src
 
 * NEOTREE
