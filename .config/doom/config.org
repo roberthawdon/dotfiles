@@ -250,14 +250,25 @@ I have also attempted to account for HiDPI displays by doubling the font size if
 
 * MAGIT
 
-Magit is the Emacs built in Git manager, practially everything you can do in git on the command line can be done with Magit. However, there doesn't appear to be a keybinding for a git pull or pull in Doom Emacs.
-Also, there's no keybinding for =git log= so we're going to override the default keybinding with one for magit-log.
+Magit is the Emacs built in Git manager, practially everything you can do in git on the command line can be done with Magit.
+
+However, there doesn't appear to be keybindings for, what I'd call, essential git commands, so I've added the following keybindings (some overriding the default Doom Emacs ones).
+
+| COMMAND      | DESCRIPTION                                                    | KEYBINDING |
+|--------------+----------------------------------------------------------------+------------|
+| magit-pull   | Pull from remote repository                                    | SPC g p    |
+| magit-push   | Push code to remote repository                                 | SPC g P    |
+| magit-log    | View commit log for current local repository                   | SPC g L    |
+| magit-rebase | Rebase your local code with the remote repository              | SPC g r    |
+| magit-reset  | Reset your branch with the remote repository or earlier commit | SPC g R    |
 
 #+begin_src emacs-lisp
 (map! :leader
-      :desc "Magit pull" "g p" #'magit-pull
-      :desc "Magit push" "g P" #'magit-push
-      :desc "Magit log"  "g L" #'magit-log) ;; Override Doom Emacs's default
+      :desc "Magit pull"   "g p" #'magit-pull
+      :desc "Magit push"   "g P" #'magit-push
+      :desc "Magit log"    "g L" #'magit-log ;; Override Doom Emacs's default
+      :desc "Magit rebase" "g r" #'magit-rebase ;; Override Doom Emacs's default
+      :desc "Magit reset"  "g R" #'magit-reset) ;; Override Doom Emacs's default
 #+end_src
 
 * NEOTREE
