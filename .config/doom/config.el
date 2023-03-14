@@ -68,6 +68,21 @@
 (map! :leader
       :desc "Toggle emojify" "t e" #'global-emojify-mode)
 
+(defun rh/ex-kill-buffer-and-close ()
+  (interactive)
+  (unless (char-equal (elt (buffer-name) 0) ?*)
+    (kill-this-buffer))
+  )
+
+(defun rh/ex-save-kill-buffer-and-close ()
+  (interactive)
+  (save-buffer)
+  (kill-this-buffer)
+  )
+
+(evil-ex-define-cmd "q[uit]" 'rh/ex-kill-buffer-and-close )
+(evil-ex-define-cmd "wq" 'rh/ex-save-kill-buffer-and-close )
+
 (when window-system
   (if  (eq system-type 'darwin)
     (setq doom-font "VictorMono Nerd Font")
@@ -170,10 +185,12 @@
              "TODO(t)"           ; A task that is ready to be tackled
              "PROJ(p)"           ; A project that contains other tasks
              "BLOG(b)"           ; Blog writing assignments
-             "DOCUMENT(d)"       ; Document writing assignments (split sections into tasks)
+             "DOCUMENT(o)"       ; Document writing assignments (split sections into tasks)
              "WAIT(w)"           ; Something is holding up this task
              "|"                 ; The pipe necessary to separate "active" states and "inactive" states
              "DONE(d)"           ; Task has been completed
+             "APPROVED(a)"       ; Change has been approved
+             "REJECTED(r)"       ; Change has been rejected
              "CANCELLED(c)" )))) ; Task has been cancelled
 
 (after! org

@@ -16,6 +16,8 @@
   - [[#making-deleted-files-go-to-trash-can][Making deleted files go to trash can]]
 - [[#doom-theme][DOOM THEME]]
 - [[#emojis][EMOJIS]]
+- [[#evil-tweaks][EVIL TWEAKS]]
+  - [[#remap-wq-and-q-to-kill-buffer][Remap :wq and :q to kill buffer]]
 - [[#fonts][FONTS]]
 - [[#neotree][NEOTREE]]
 - [[#magit][MAGIT]]
@@ -208,6 +210,30 @@ I have created a toggle for this using the 'SPC t e' keybinding.
 (map! :leader
       :desc "Toggle emojify" "t e" #'global-emojify-mode)
 #+end_src
+
+* EVIL TWEAKS
+** Remap :wq and :q to kill buffer
+When using EVIL mode with Emacs, I prefer think of it as a mini Vim within Emacs. Because of this, I want to remap =:wq= and =:q= to simply kill the current buffer rather than completely quitting Emacs. This is a reworking of a hack I found from someone on a Chinese Emacs forum many years ago when I used Spacemacs for a bit.
+The original user goes by the name liu233w, so credit goes to him.
+Original post: https://emacs-china.org/t/evil-q-kill-buffer/626/4
+
+#+begin_src emacs-lisp
+(defun rh/ex-kill-buffer-and-close ()
+  (interactive)
+  (unless (char-equal (elt (buffer-name) 0) ?*)
+    (kill-this-buffer))
+  )
+
+(defun rh/ex-save-kill-buffer-and-close ()
+  (interactive)
+  (save-buffer)
+  (kill-this-buffer)
+  )
+
+(evil-ex-define-cmd "q[uit]" 'rh/ex-kill-buffer-and-close )
+(evil-ex-define-cmd "wq" 'rh/ex-save-kill-buffer-and-close )
+#+end_src
+
 * FONTS
 
 Settings related to fonts within Doom Emacs:
@@ -399,10 +425,12 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
              "TODO(t)"           ; A task that is ready to be tackled
              "PROJ(p)"           ; A project that contains other tasks
              "BLOG(b)"           ; Blog writing assignments
-             "DOCUMENT(d)"       ; Document writing assignments (split sections into tasks)
+             "DOCUMENT(o)"       ; Document writing assignments (split sections into tasks)
              "WAIT(w)"           ; Something is holding up this task
              "|"                 ; The pipe necessary to separate "active" states and "inactive" states
              "DONE(d)"           ; Task has been completed
+             "APPROVED(a)"       ; Change has been approved
+             "REJECTED(r)"       ; Change has been rejected
              "CANCELLED(c)" )))) ; Task has been cancelled
 #+end_src
 
