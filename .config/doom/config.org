@@ -19,6 +19,7 @@
 - [[#fonts][FONTS]]
 - [[#neotree][NEOTREE]]
 - [[#magit][MAGIT]]
+  - [[#magit-forge][Magit-forge]]
 - [[#markdown][MARKDOWN]]
 - [[#maximise-at-start][MAXIMISE AT START]]
 - [[#minimap][MINIMAP]]
@@ -284,6 +285,14 @@ However, there doesn't appear to be keybindings for, what I'd call, essential gi
       :desc "Magit log"    "g L" #'magit-log ;; Override Doom Emacs's default
       :desc "Magit rebase" "g r" #'magit-rebase ;; Override Doom Emacs's default
       :desc "Magit reset"  "g R" #'magit-reset) ;; Override Doom Emacs's default
+#+end_src
+
+** Magit-forge
+For the ability to work with extended features provided by Github and Gitlab, we need to use the forge extension of Magit, then we also need a personal token. Here we tell Emacs where our token is sotred. More information about how to get started is here:
+https://magit.vc/manual/ghub.html#Creating-and-Storing-a-Token
+
+#+begin_src emacs-lisp
+(setq auth-sources '("~/.authinfo"))
 #+end_src
 
 * MARKDOWN

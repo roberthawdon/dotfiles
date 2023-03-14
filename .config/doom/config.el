@@ -112,6 +112,8 @@
       :desc "Magit rebase" "g r" #'magit-rebase ;; Override Doom Emacs's default
       :desc "Magit reset"  "g R" #'magit-reset) ;; Override Doom Emacs's default
 
+(setq auth-sources '("~/.authinfo"))
+
 (custom-set-faces
  '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight bold :family "variable-pitch"))))
  '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.7))))
