@@ -183,6 +183,8 @@
         org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
           '((sequence
              "TODO(t)"           ; A task that is ready to be tackled
+             "TO REVIEW(e)"      ; A change that is ready to be reviewed
+             "IN PROGRESS(i)"    ; A tast that is in progress
              "PROJ(p)"           ; A project that contains other tasks
              "BLOG(b)"           ; Blog writing assignments
              "DOCUMENT(o)"       ; Document writing assignments (split sections into tasks)
