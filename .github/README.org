@@ -22,4 +22,4 @@ I am Robert Hawdon, a professional DevOps engineer, author of the [[https://gith
 - [[https://reddit.com/u/ianhawdon][Reddit]]
 
 * How to manage your Dotfiles
-There are a few ways to manage your Dotfiles, the way I'm doing it is by using the =git bare repository= method. Here is an example of how this can be achieved: [[https://www.atlassian.com/git/tutorials/dotfiles][https://www.atlassian.com/git/tutorials/dotfiles]]
+There are a few ways to manage your Dotfiles, the way I'm doing it is by using the *git bare repository* method. Here is an example of how this can be achieved: [[https://www.atlassian.com/git/tutorials/dotfiles][https://www.atlassian.com/git/tutorials/dotfiles]]
