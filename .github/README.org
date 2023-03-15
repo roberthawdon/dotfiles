@@ -1,0 +1,25 @@
+#+title: Robert Hawdon's Dotfiles
+
+* Table Of Contents :toc:
+- [[#what-are-dotfiles][What are Dotfiles?]]
+- [[#who-am-i][Who am I?]]
+- [[#robert-hawdon-on-the-web][Robert Hawdon on the web]]
+- [[#how-to-manage-your-dotfiles][How to manage your Dotfiles]]
+
+* What are Dotfiles?
+Dotfiles are configuration files that define how an application behaves. These are generally found on your system in your home directory as files or directories proceeding with a dot.
+
+As some applications can take months of tinkering to get exactly to the your liking, it's often worth backing up your Dotfiles. I'm backing mine up here, which makes it really easy to transfer my configuration between machines. In the interest of helping others configure their software, I'm publishing my Dotfiles publically to help give examples of how software can be customised. Feel free to use this as a base for customising your system.
+
+* Who am I?
+I am Robert Hawdon, a professional DevOps engineer, author of the [[https://github.com/roberthawdon/dfshow][DF-SHOW]] terminal file manager, and blogger.
+
+* Robert Hawdon on the web
+- [[https://robert.hawdon.net][My personal website]]
+- [[https://github.com/roberthawdon][GitHub]]
+- [[https://dfshow.org][DF-SHOW Website]]
+- [[https://twitter.com/ianhawdon][Twitter]]
+- [[https://reddit.com/u/ianhawdon][Reddit]]
+
+* How to manage your Dotfiles
+There are a few ways to manage your Dotfiles, the way I'm doing it is by using the =git bare repository= method. Here is an example of how this can be achieved: [[https://www.atlassian.com/git/tutorials/dotfiles][https://www.atlassian.com/git/tutorials/dotfiles]]
