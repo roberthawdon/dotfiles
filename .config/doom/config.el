@@ -1,6 +1,9 @@
 (beacon-mode 1)
 
 (map! :leader
+      :desc "Toggle beacon mode" "t B" #'beacon-mode)
+
+(map! :leader
       (:prefix ("c h" . "Help info from Clippy")
        :desc "Clippy describes function under point" "f" #'clippy-describe-function
        :desc "Clippy describes variable under point" "v" #'clippy-describe-variable))
@@ -453,8 +456,11 @@
 )
 
 (after! org
-  (setq org-roam-directory "~/Org/roam/"
-        org-roam-graph-viewer "brave"))
+  (setq org-roam-directory "~/Org/roam/")
+  (if  (eq system-type 'darwin)
+        (setq org-roam-graph-viewer "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"))
+  (if  (eq system-type 'gnu/linux)
+        (setq org-roam-graph-viewer "brave")))
 
 (map! :leader
       (:prefix ("n r" . "org-roam")
