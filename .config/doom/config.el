@@ -482,3 +482,8 @@
 
 (add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
 (provide 'start-mode)
+
+(tab-bar-mode 1)
+
+(map! :leader
+      :desc "Toggle tab bar mode" "t t" #'tab-bar-mode)

@@ -35,6 +35,7 @@
   - [[#org-priorities][Org Priorities]]
   - [[#org-roam][Org-roam]]
 - [[#start-page][START PAGE]]
+- [[#tab-bar-mode][TAB BAR MODE]]
 
 * ABOUT THIS CONFIG
 This is my personal Doom Emacs config. Based heavily on the work of Derek Taylor (https://gitlab.com/dwt1/dotfiles) with a few modifications to suit my needs.
@@ -765,4 +766,14 @@ Instead of using Doom's Dashboard or the Emacs Dashboard program, I have decided
 
 (add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
 (provide 'start-mode)
+#+end_src
+
+* TAB BAR MODE
+Emacs supports tabs, it's an out of the box feature, and is great for having differnet works spaces you can easily switch between. It's not enabled by default, and also doesn't have a keybinding, so we're going to set it up in the toggles menu.
+
+#+begin_src emacs-lisp
+(tab-bar-mode 1)
+
+(map! :leader
+      :desc "Toggle tab bar mode" "t t" #'tab-bar-mode)
 #+end_src
