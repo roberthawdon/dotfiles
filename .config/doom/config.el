@@ -471,6 +471,15 @@
        :desc "Capture to node"     "n" #'org-roam-capture
        :desc "Toggle roam buffer"  "r" #'org-roam-buffer-toggle))
 
+(defun rh/force-org-rebuild-cache ()
+  "Rebuild the `org-mode' and `org-roam' cache."
+  (interactive)
+  (org-id-update-id-locations)
+  ;; Note: you may need `org-roam-db-clear-all'
+  ;; followed by `org-roam-db-sync'
+  (org-roam-db-sync)
+  (org-roam-update-org-id-locations))
+
 (setq initial-buffer-choice "~/.config/doom/start.org")
 
 (define-minor-mode start-mode

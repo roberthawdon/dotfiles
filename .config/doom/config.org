@@ -5,7 +5,7 @@
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
 
-* TABLE OF CONTENTS :toc:
+* TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
 - [[#beacon][BEACON]]
 - [[#clippy][CLIPPY]]
@@ -34,6 +34,7 @@
   - [[#org-journal][Org-journal]]
   - [[#org-priorities][Org Priorities]]
   - [[#org-roam][Org-roam]]
+  - [[#rebuild-org-cache][Rebuild Org Cache]]
 - [[#start-page][START PAGE]]
 - [[#tab-bar-mode][TAB BAR MODE]]
 
@@ -751,6 +752,18 @@ By default, Org only ships with 3 priority settings, let's change that.
        :desc "Toggle roam buffer"  "r" #'org-roam-buffer-toggle))
 #+end_src
 
+** Rebuild Org Cache
+
+#+begin_src emacs-lisp
+(defun rh/force-org-rebuild-cache ()
+  "Rebuild the `org-mode' and `org-roam' cache."
+  (interactive)
+  (org-id-update-id-locations)
+  ;; Note: you may need `org-roam-db-clear-all'
+  ;; followed by `org-roam-db-sync'
+  (org-roam-db-sync)
+  (org-roam-update-org-id-locations))
+#+end_src
 * START PAGE
 Instead of using Doom's Dashboard or the Emacs Dashboard program, I have decided to just set an custom start file as my "dashboard" since it allows me more customization options.  I have added to the 'start-mode-hook' the argument 'read-only-mode'.  This is to prevent accidental editing of the start file, and to prevent clashes with the 'start-mode' specific keybindings.  You can toggle on/off read-only-mode with 'SPC t r'.
 
