@@ -30,6 +30,7 @@
 - [[#org-mode][ORG MODE]]
   - [[#org-agenda][Org-agenda]]
   - [[#org-auto-tangle][Org-auto-tangle]]
+  - [[#org-export][Org export]]
   - [[#org-fonts][Org fonts]]
   - [[#org-journal][Org-journal]]
   - [[#org-priorities][Org Priorities]]
@@ -530,6 +531,15 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
 
 (map! :leader
       :desc "Insert auto_tangle tag" "i a" #'rh/ginsert-auto-tangle-tag)
+#+end_src
+
+** Org export
+Some extra support for exporting to different formats from Org mode.
+
+#+begin_src emacs-lisp
+(use-package ox-clip)
+(use-package ox-man)
+(use-package ox-gemini)
 #+end_src
 
 ** Org fonts

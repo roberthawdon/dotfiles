@@ -279,6 +279,10 @@
 (map! :leader
       :desc "Insert auto_tangle tag" "i a" #'rh/ginsert-auto-tangle-tag)
 
+(use-package ox-clip)
+(use-package ox-man)
+(use-package ox-gemini)
+
 (after! org
     (defun rh/gorg-colors-doom-one ()
     "Enable Doom One colors for Org headers."

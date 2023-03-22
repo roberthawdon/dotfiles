@@ -16,6 +16,8 @@
 (package! org-auto-tangle)
 (package! org-fancy-priorities)
 (package! org-web-tools)
+(package! ox-clip)
+(package! ox-gemini)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
