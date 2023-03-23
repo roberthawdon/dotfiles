@@ -17,6 +17,7 @@
 - [[#doom-theme][DOOM THEME]]
 - [[#emojis][EMOJIS]]
 - [[#evil-tweaks][EVIL TWEAKS]]
+  - [[#disable-evil-snipe][Disable evil-snipe]]
   - [[#remap-wq-and-q-to-kill-buffer][Remap :wq and :q to kill buffer]]
 - [[#fonts][FONTS]]
 - [[#neotree][NEOTREE]]
@@ -219,6 +220,14 @@ I have created a toggle for this using the 'SPC t e' keybinding.
 #+end_src
 
 * EVIL TWEAKS
+** Disable evil-snipe
+I haven't used this, and miss using the =s= and =S= keybinding for subsitute, so let's disable it here
+
+#+begin_src emacs-lisp
+(after! evil-snipe
+  (evil-snipe-mode -1))
+#+end_src
+
 ** Remap :wq and :q to kill buffer
 When using EVIL mode with Emacs, I prefer think of it as a mini Vim within Emacs. Because of this, I want to remap =:wq= and =:q= to simply kill the current buffer rather than completely quitting Emacs. This is a reworking of a hack I found from someone on a Chinese Emacs forum many years ago when I used Spacemacs for a bit.
 The original user goes by the name liu233w, so credit goes to him.

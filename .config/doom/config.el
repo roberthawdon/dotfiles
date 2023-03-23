@@ -71,6 +71,9 @@
 (map! :leader
       :desc "Toggle emojify" "t e" #'global-emojify-mode)
 
+(after! evil-snipe
+  (evil-snipe-mode -1))
+
 (defun rh/ex-kill-buffer-and-close ()
   (interactive)
   (unless (char-equal (elt (buffer-name) 0) ?*)
