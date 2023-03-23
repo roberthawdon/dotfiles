@@ -38,6 +38,7 @@
   - [[#rebuild-org-cache][Rebuild Org Cache]]
 - [[#start-page][START PAGE]]
 - [[#tab-bar-mode][TAB BAR MODE]]
+- [[#title-bar][TITLE BAR]]
 
 * ABOUT THIS CONFIG
 This is my personal Doom Emacs config. Based heavily on the work of Derek Taylor (https://gitlab.com/dwt1/dotfiles) with a few modifications to suit my needs.
@@ -805,4 +806,11 @@ Emacs supports tabs, it's an out of the box feature, and is great for having dif
 
 (map! :leader
       :desc "Toggle tab bar mode" "t t" #'tab-bar-mode)
+#+end_src
+
+* TITLE BAR
+Removing the name "Doom" from "Doom Emacs" on the off chance that someone at work mistakes it for the 1993 game of the same name.
+
+#+begin_src emacs-lisp
+(setq frame-title-format '("%b – Emacs"))
 #+end_src

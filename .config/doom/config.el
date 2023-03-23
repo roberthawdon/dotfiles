@@ -506,3 +506,5 @@
 
 (map! :leader
       :desc "Toggle tab bar mode" "t t" #'tab-bar-mode)
+
+(setq frame-title-format '("%b – Emacs"))
