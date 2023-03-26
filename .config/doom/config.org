@@ -17,7 +17,6 @@
 - [[#doom-theme][DOOM THEME]]
 - [[#emojis][EMOJIS]]
 - [[#evil-tweaks][EVIL TWEAKS]]
-  - [[#disable-evil-snipe][Disable evil-snipe]]
   - [[#remap-wq-and-q-to-kill-buffer][Remap :wq and :q to kill buffer]]
 - [[#fonts][FONTS]]
 - [[#neotree][NEOTREE]]
@@ -36,6 +35,7 @@
   - [[#org-journal][Org-journal]]
   - [[#org-priorities][Org Priorities]]
   - [[#org-roam][Org-roam]]
+  - [[#org-roam-auto-publish][Org-roam auto publish]]
   - [[#rebuild-org-cache][Rebuild Org Cache]]
 - [[#start-page][START PAGE]]
 - [[#tab-bar-mode][TAB BAR MODE]]
@@ -220,13 +220,6 @@ I have created a toggle for this using the 'SPC t e' keybinding.
 #+end_src
 
 * EVIL TWEAKS
-** Disable evil-snipe
-I haven't used this, and miss using the =s= and =S= keybinding for subsitute, so let's disable it here
-
-#+begin_src emacs-lisp
-(after! evil-snipe
-  (evil-snipe-mode -1))
-#+end_src
 
 ** Remap :wq and :q to kill buffer
 When using EVIL mode with Emacs, I prefer think of it as a mini Vim within Emacs. Because of this, I want to remap =:wq= and =:q= to simply kill the current buffer rather than completely quitting Emacs. This is a reworking of a hack I found from someone on a Chinese Emacs forum many years ago when I used Spacemacs for a bit.
@@ -771,6 +764,22 @@ By default, Org only ships with 3 priority settings, let's change that.
        :desc "Capture to node"     "n" #'org-roam-capture
        :desc "Toggle roam buffer"  "r" #'org-roam-buffer-toggle))
 #+end_src
+
+** Org-roam auto publish
+I'm using Org-roam to build a knowledgebase, but I don't want all of my notes to be published, so to get around this, I add a tag. I'm going to add a shortcut here to add that tag to my notes.
+
+#+begin_src emacs-lisp
+(defun rh/ginsert-auto-publish ()
+  "Insert auto-tangle tag in a literate config."
+  (interactive)
+  (evil-org-open-below 1)
+  (insert "#+filetags: publish")
+  (evil-force-normal-state))
+
+(map! :leader
+      :desc "Insert publish tag" "i P" #'rh/ginsert-auto-publish)
+#+end_src
+
 
 ** Rebuild Org Cache
 

@@ -71,9 +71,6 @@
 (map! :leader
       :desc "Toggle emojify" "t e" #'global-emojify-mode)
 
-(after! evil-snipe
-  (evil-snipe-mode -1))
-
 (defun rh/ex-kill-buffer-and-close ()
   (interactive)
   (unless (char-equal (elt (buffer-name) 0) ?*)
@@ -477,6 +474,16 @@
        :desc "Insert node"         "i" #'org-roam-node-insert
        :desc "Capture to node"     "n" #'org-roam-capture
        :desc "Toggle roam buffer"  "r" #'org-roam-buffer-toggle))
+
+(defun rh/ginsert-auto-publish ()
+  "Insert auto-tangle tag in a literate config."
+  (interactive)
+  (evil-org-open-below 1)
+  (insert "#+filetags: publish")
+  (evil-force-normal-state))
+
+(map! :leader
+      :desc "Insert publish tag" "i P" #'rh/ginsert-auto-publish)
 
 (defun rh/force-org-rebuild-cache ()
   "Rebuild the `org-mode' and `org-roam' cache."
