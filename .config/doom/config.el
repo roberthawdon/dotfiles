@@ -328,11 +328,12 @@ it can be passed in POS."
           (insert now)))))
 
   (defun rh/org-set-last-modified ()
-    "Update the LAST_MODIFIED file property in the preamble."
+    "Update the LAST-MODIFIED file property in the preamble."
     (interactive)
     (when (derived-mode-p 'org-mode)
-      (rh/org-set-time-file-property "LAST_MODIFIED")))
+      (rh/org-set-time-file-property "LAST-MODIFIED")))
 
+  (add-hook 'before-save-hook #'rh/org-set-last-modified)
 
 )
 
@@ -527,6 +528,12 @@ it can be passed in POS."
        :desc "Insert node"         "i" #'org-roam-node-insert
        :desc "Capture to node"     "n" #'org-roam-capture
        :desc "Toggle roam buffer"  "r" #'org-roam-buffer-toggle))
+
+(setq org-roam-capture-templates
+  '(("d" "default" plain "%?"
+     :target (file+head "%<%Y%m%d%H%M%S>.org"
+                        "#+title: ${title}\n#+CREATED: %U\n#+LAST-MODIFIED: %U\n")
+     :unnarrowed t)))
 
 (defun rh/ginsert-auto-publish ()
   "Insert auto-tangle tag in a literate config."

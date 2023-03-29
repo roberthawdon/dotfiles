@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST_MODIFIED: [2023-03-27 Mon 20:29]
+#+LAST-MODIFIED: [2023-03-29 Wed 06:40]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -554,7 +554,7 @@ Credit for this must go to [[https://github.com/zaeph/][Leo Vivier]] who has cre
 + =org-find-time-file-property= - Return the position of the time file PROPERTY if it exists. When ANYWHERE is non-nil, search beyond the preamble.
 + =org-has-time-file-property-p= - Return the position of time file PROPERTY if it is defined. As a special case, return -1 if the time file PROPERTY exists but is not defined.
 + =org-set-time-file-property= - Set the time file PROPERTY in the preamble. When ANYWHERE is non-nil, search beyond the preamble. If the position of the file PROPERTY has already been computed, it can be passed in POS.
-+ =org-set-last-modified= - Update the LAST_MODIFIED file property in the preamble.
++ =org-set-last-modified= - Update the LAST-MODIFIED file property in the preamble.
 
 #+begin_src emacs-lisp
 (after! org
@@ -602,11 +602,12 @@ it can be passed in POS."
           (insert now)))))
 
   (defun rh/org-set-last-modified ()
-    "Update the LAST_MODIFIED file property in the preamble."
+    "Update the LAST-MODIFIED file property in the preamble."
     (interactive)
     (when (derived-mode-p 'org-mode)
-      (rh/org-set-time-file-property "LAST_MODIFIED")))
+      (rh/org-set-time-file-property "LAST-MODIFIED")))
 
+  (add-hook 'before-save-hook #'rh/org-set-last-modified)
 
 )
 
@@ -830,7 +831,16 @@ By default, Org only ships with 3 priority settings, let's change that.
        :desc "Insert node"         "i" #'org-roam-node-insert
        :desc "Capture to node"     "n" #'org-roam-capture
        :desc "Toggle roam buffer"  "r" #'org-roam-buffer-toggle))
+
+(setq org-roam-capture-templates
+  '(("d" "default" plain "%?"
+     :target (file+head "%<%Y%m%d%H%M%S>.org"
+                        "#+title: ${title}\n#+CREATED: %U\n#+LAST-MODIFIED: %U\n")
+     :unnarrowed t)))
 #+end_src
+
+#+RESULTS:
+| d | default | plain | %? | :target | (file+head %<%Y%m%d%H%M%S>-${slug}.org #+title: ${title} |
 
 ** Org-roam auto publish
 I'm using Org-roam to build a knowledgebase, but I don't want all of my notes to be published, so to get around this, I add a tag. I'm going to add a shortcut here to add that tag to my notes.
