@@ -210,21 +210,13 @@
                                   (?B . "🟥 [High Priority]")
                                   (?C . "🟨 [Medium Priority]")
                                   (?D . "🟩 [Low Priority]")
-                                  (?E . "☕ [Non Priority]")
-                                  (?F . "⚡ [P1]")
-                                  (?G . "🌧 [P2]")
-                                  (?H . "☁ [P3]")
-                                  (?I . "☀ [P4]"))
+                                  (?E . "☕ [Non Priority]"))
      org-priority-faces
      '((?A :foreground "#ff0000" :weight bold)
        (?B :foreground "#ff6c6b" :weight bold)
        (?C :foreground "#97d138" :weight bold)
        (?D :foreground "#25be4b" :weight bold)
-       (?E :foreground "#c678dd" :weight bold)
-       (?F :foreground "#ff0000" :weight bold)
-       (?G :foreground "#ff6c6b" :weight bold)
-       (?H :foreground "#97d138" :weight bold)
-       (?I :foreground "#25be4b" :weight bold))
+       (?E :foreground "#c678dd" :weight bold))
      org-agenda-block-separator 8411)
 
   (setq org-agenda-custom-commands
@@ -244,18 +236,6 @@
             (tags "PRIORITY=\"E\""
                   ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
                    (org-agenda-overriding-header "Non-priority unfinished tasks:")))
-            (tags "PRIORITY=\"F\""
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
-                   (org-agenda-overriding-header "Open P1 Incidents:")))
-            (tags "PRIORITY=\"G\""
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
-                   (org-agenda-overriding-header "Open P2 Incidents:")))
-            (tags "PRIORITY=\"H\""
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
-                   (org-agenda-overriding-header "Open P3 Incidents:")))
-            (tags "PRIORITY=\"I\""
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
-                   (org-agenda-overriding-header "Open P4 Incidents:")))
             (tags "customtag"
                   ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'todo))
                    (org-agenda-overriding-header "Tasks marked with customtag:")))
