@@ -490,7 +490,7 @@ it can be passed in POS."
 
 (setq   org-highest-priority ?A
     org-default-priority ?C
-    org-lowest-priority ?I
+    org-lowest-priority ?E
 )
 
 (after! org

@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2023-04-07 Fri 06:21]
+#+LAST-MODIFIED: [2023-04-07 Fri 06:24]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -779,7 +779,7 @@ By default, Org only ships with 3 priority settings, let's change that.
 #+begin_src emacs-lisp
 (setq   org-highest-priority ?A
     org-default-priority ?C
-    org-lowest-priority ?I
+    org-lowest-priority ?E
 )
 #+end_src
 
