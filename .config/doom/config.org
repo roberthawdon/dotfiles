@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2023-04-07 Fri 06:24]
+#+LAST-MODIFIED: [2023-05-18 Thu 06:14]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -311,6 +311,7 @@ However, there doesn't appear to be keybindings for, what I'd call, essential gi
 |--------------+----------------------------------------------------------------+------------|
 | magit-pull   | Pull from remote repository                                    | SPC g p    |
 | magit-push   | Push code to remote repository                                 | SPC g P    |
+| magit-diff   | View differences between branches and commits                  | SPC g d    |
 | magit-log    | View commit log for current local repository                   | SPC g L    |
 | magit-rebase | Rebase your local code with the remote repository              | SPC g r    |
 | magit-reset  | Reset your branch with the remote repository or earlier commit | SPC g R    |
@@ -319,6 +320,7 @@ However, there doesn't appear to be keybindings for, what I'd call, essential gi
 (map! :leader
       :desc "Magit pull"   "g p" #'magit-pull
       :desc "Magit push"   "g P" #'magit-push
+      :desc "Magit diff"   "g d" #'magit-diff
       :desc "Magit log"    "g L" #'magit-log ;; Override Doom Emacs's default
       :desc "Magit rebase" "g r" #'magit-rebase ;; Override Doom Emacs's default
       :desc "Magit reset"  "g R" #'magit-reset) ;; Override Doom Emacs's default
