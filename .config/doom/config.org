@@ -4,11 +4,12 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2023-05-18 Thu 06:14]
+#+LAST-MODIFIED: [2023-06-20 Tue 07:26]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
 - [[#beacon][BEACON]]
+- [[#centaur-tabs][CENTAUR-TABS]]
 - [[#clippy][CLIPPY]]
 - [[#dired][DIRED]]
   - [[#keybindings-to-open-dired][Keybindings To Open Dired]]
@@ -39,8 +40,8 @@
   - [[#org-roam][Org-roam]]
   - [[#org-roam-auto-publish][Org-roam auto publish]]
   - [[#rebuild-org-cache][Rebuild Org Cache]]
+- [[#perspective][PERSPECTIVE]]
 - [[#start-page][START PAGE]]
-- [[#tab-bar-mode][TAB BAR MODE]]
 - [[#title-bar][TITLE BAR]]
 
 * ABOUT THIS CONFIG
@@ -56,6 +57,34 @@ Never lose your cursor. When you scroll, your cursor will shine! This is a globa
 (map! :leader
       :desc "Toggle beacon mode" "t B" #'beacon-mode)
 #+end_src
+* CENTAUR-TABS
+To use tabs in Doom Emacs, be sure to uncomment "tabs" in Doom's init.el.  Displays tabs at the top of the window similar to tabbed web browsers such as Firefox.  I don't actually use tabs in Emacs.  I placed this in my config to help others who may want tabs.  In the default configuration of Doom Emacs, 'SPC t' is used for "toggle" keybindings, so I choose 'SPC t c' to toggle centaur-tabs.  The "g" prefix for keybindings is used for a bunch of evil keybindings in Doom, but "g" plus the arrow keys were not used, so I thought I would bind those for tab navigation.  But I did leave the default "g t" and "g T" intact if you prefer to use those for centaur-tabs-forward/backward.
+
+| COMMAND                     | DESCRIPTION               | KEYBINDING       |
+|-----------------------------+---------------------------+------------------|
+| centaur-tabs-mode           | /Toggle tabs globally/      | SPC t c          |
+| centaur-tabs-local-mode     | /Toggle tabs local display/ | SPC t C          |
+| centaur-tabs-forward        | /Next tab/                  | g <right> or g t |
+| centaur-tabs-backward       | /Previous tab/              | g <left> or g T  |
+| centaur-tabs-forward-group  | /Next tab group/            | g <down>         |
+| centaur-tabs-backward-group | /Previous tab group/        | g <up>           |
+
+#+BEGIN_SRC emacs-lisp
+(setq centaur-tabs-set-bar 'over
+      centaur-tabs-set-icons t
+      centaur-tabs-gray-out-icons 'buffer
+      centaur-tabs-height 24
+      centaur-tabs-set-modified-marker t
+      centaur-tabs-style "bar"
+      centaur-tabs-modified-marker "•")
+(map! :leader
+      :desc "Toggle tabs globally" "t c" #'centaur-tabs-mode
+      :desc "Toggle tabs local display" "t C" #'centaur-tabs-local-mode)
+(evil-define-key 'normal centaur-tabs-mode-map (kbd "g <right>") 'centaur-tabs-forward        ; default Doom binding is 'g t'
+                                               (kbd "g <left>")  'centaur-tabs-backward       ; default Doom binding is 'g T'
+                                               (kbd "g <down>")  'centaur-tabs-forward-group
+                                               (kbd "g <up>")    'centaur-tabs-backward-group)
+#+END_SRC
 
 * CLIPPY
 
@@ -852,6 +881,29 @@ I'm using Org-roam to build a knowledgebase, but I don't want all of my notes to
   (org-roam-db-sync)
   (org-roam-update-org-id-locations))
 #+end_src
+
+* PERSPECTIVE
+Manage multiple projects at once by harnessing the power of workspaces. Each perspective has its own buffer list and its own window layout, making it easy to work on many separate projects without getting lost in all the buffers.  Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available (by default)
+
+| COMMAND                    | DESCRIPTION                         | KEYBINDING |
+|----------------------------+-------------------------------------+------------|
+| persp-switch               | /Switch to perspective NAME/          | SPC DEL    |
+| persp-switch-to-buffer     | /Switch to buffer in perspective/     | SPC ,      |
+| persp-next                 | /Switch to next perspective/          | SPC ]      |
+| persp-prev                 | /Switch to previous perspective/      | SPC [      |
+| persp-add-buffer           | /Add a buffer to current perspective/ | SPC +      |
+| persp-remove-by-name       | /Remove perspective by name/          | SPC -      |
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Switch to perspective NAME"       "DEL" #'persp-switch
+      :desc "Switch to buffer in perspective"  "," #'persp-switch-to-buffer
+      :desc "Switch to next perspective"       "]" #'persp-next
+      :desc "Switch to previous perspective"   "[" #'persp-prev
+      :desc "Add a buffer current perspective" "+" #'persp-add-buffer
+      :desc "Remove perspective by name"       "-" #'persp-remove-by-name)
+#+end_src
+
 * START PAGE
 Instead of using Doom's Dashboard or the Emacs Dashboard program, I have decided to just set an custom start file as my "dashboard" since it allows me more customization options.  I have added to the 'start-mode-hook' the argument 'read-only-mode'.  This is to prevent accidental editing of the start file, and to prevent clashes with the 'start-mode' specific keybindings.  You can toggle on/off read-only-mode with 'SPC t r'.
 
@@ -873,16 +925,6 @@ Instead of using Doom's Dashboard or the Emacs Dashboard program, I have decided
 
 (add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
 (provide 'start-mode)
-#+end_src
-
-* TAB BAR MODE
-Emacs supports tabs, it's an out of the box feature, and is great for having differnet works spaces you can easily switch between. It's not enabled by default, and also doesn't have a keybinding, so we're going to set it up in the toggles menu.
-
-#+begin_src emacs-lisp
-(tab-bar-mode 1)
-
-(map! :leader
-      :desc "Toggle tab bar mode" "t t" #'tab-bar-mode)
 #+end_src
 
 * TITLE BAR
