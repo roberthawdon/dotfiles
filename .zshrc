@@ -129,3 +129,9 @@ export LESS='-Ri --mouse --wheel-lines=3'
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
  
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# OS Spesific config:
+# macOS
+if [[ $(uname) == "Darwin" ]]; then
+    export PATH="/opt/homebrew/opt/sphinx-doc/bin:$PATH"
+fi
