@@ -12,7 +12,8 @@
       centaur-tabs-modified-marker "•")
 (map! :leader
       :desc "Toggle tabs globally" "t c" #'centaur-tabs-mode
-      :desc "Toggle tabs local display" "t C" #'centaur-tabs-local-mode)
+      :desc "Toggle tabs local display" "t C" #'centaur-tabs-local-mode
+      :desc "Toggle tab group view" "t t" #'centaur-tabs-toggle-groups)
 (evil-define-key 'normal centaur-tabs-mode-map (kbd "g <right>") 'centaur-tabs-forward        ; default Doom binding is 'g t'
                                                (kbd "g <left>")  'centaur-tabs-backward       ; default Doom binding is 'g T'
                                                (kbd "g <down>")  'centaur-tabs-forward-group
