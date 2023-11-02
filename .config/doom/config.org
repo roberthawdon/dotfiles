@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2023-11-02 Thu 08:33]
+#+LAST-MODIFIED: [2023-11-02 Thu 08:38]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -231,7 +231,7 @@ ln -s ~/.local/share/Trash .
 
 * DOOM THEME
 
-Setting the theme to doom-one.  To try out new themes, I set a keybinding for counsel-load-theme with 'SPC h t'.
+Setting the theme. To try out new themes, I set a keybinding for counsel-load-theme with 'SPC h t'.
 
 #+begin_src emacs-lisp
 (setq doom-theme 'doom-ir-black)
@@ -255,7 +255,7 @@ I have created a toggle for this using the 'SPC t e' keybinding.
 
 ** Remap :wq and :q to kill buffer
 When using EVIL mode with Emacs, I prefer think of it as a mini Vim within Emacs. Because of this, I want to remap =:wq= and =:q= to simply kill the current buffer rather than completely quitting Emacs. This is a reworking of a hack I found from someone on a Chinese Emacs forum many years ago when I used Spacemacs for a bit.
-The original user goes by the name liu233w, so credit goes to him.
+The original user goes by the name liu233w, so credit goes to them.
 Original post: https://emacs-china.org/t/evil-q-kill-buffer/626/4
 
 #+begin_src emacs-lisp
