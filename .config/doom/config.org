@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2023-11-02 Thu 08:38]
+#+LAST-MODIFIED: [2023-11-03 Fri 16:01]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -16,6 +16,7 @@
   - [[#keybindings-within-dired][Keybindings Within Dired]]
   - [[#keybindings-within-dired-with-peep-dired-mode-enabled][Keybindings Within Dired With Peep-Dired-Mode Enabled]]
   - [[#making-deleted-files-go-to-trash-can][Making deleted files go to trash can]]
+- [[#doom-dashboard][DOOM DASHBOARD]]
 - [[#doom-theme][DOOM THEME]]
 - [[#emojis][EMOJIS]]
 - [[#evil-tweaks][EVIL TWEAKS]]
@@ -41,7 +42,7 @@
   - [[#org-roam-auto-publish][Org-roam auto publish]]
   - [[#rebuild-org-cache][Rebuild Org Cache]]
 - [[#perspective][PERSPECTIVE]]
-- [[#start-page][START PAGE]]
+- [[#start-page-currently-disabled][START PAGE (Currently disabled)]]
 - [[#title-bar][TITLE BAR]]
 
 * ABOUT THIS CONFIG
@@ -229,6 +230,13 @@ cd ~/
 ln -s ~/.local/share/Trash .
 #+end_example
 
+* DOOM DASHBOARD
+It is possible to customise the Doom Dashboard. Here I've replaced the ASCII Doom logo with a PNG of the GNU Emacs logo to avoid confusion in a the workplace where Doom may be confused with the ID Software 1993 game of the same name.
+
+#+begin_src emacs-lisp
+(setq fancy-splash-image (concat doom-private-dir "images/emacs-logo.png"))
+#+end_src
+
 * DOOM THEME
 
 Setting the theme. To try out new themes, I set a keybinding for counsel-load-theme with 'SPC h t'.
@@ -360,8 +368,12 @@ However, there doesn't appear to be keybindings for, what I'd call, essential gi
 For the ability to work with extended features provided by Github and Gitlab, we need to use the forge extension of Magit, then we also need a personal token. Here we tell Emacs where our token is sotred. More information about how to get started is here:
 https://magit.vc/manual/ghub.html#Creating-and-Storing-a-Token
 
+Before you can interact with remote services, you need to add the repository to the Forge database, I have added the key binding 'SPC g a' to do this.
+
 #+begin_src emacs-lisp
 (setq auth-sources '("~/.authinfo"))
+(map! :leader
+      :desc "Forge add repository" "g a" #'forge-add-repository)
 #+end_src
 
 * MARKDOWN
@@ -905,27 +917,30 @@ Manage multiple projects at once by harnessing the power of workspaces. Each per
       :desc "Remove perspective by name"       "-" #'persp-remove-by-name)
 #+end_src
 
-* START PAGE
+* START PAGE (Currently disabled)
+
+*For now, I've decided to switch back to the Doom Dashboard, but I've left the config below for reference*
+
 Instead of using Doom's Dashboard or the Emacs Dashboard program, I have decided to just set an custom start file as my "dashboard" since it allows me more customization options.  I have added to the 'start-mode-hook' the argument 'read-only-mode'.  This is to prevent accidental editing of the start file, and to prevent clashes with the 'start-mode' specific keybindings.  You can toggle on/off read-only-mode with 'SPC t r'.
 
 #+begin_src emacs-lisp
-(setq initial-buffer-choice "~/.config/doom/start.org")
-
-(define-minor-mode start-mode
-  "Provide functions for custom start page."
-  :lighter " start"
-  :keymap (let ((map (make-sparse-keymap)))
-          ;;(define-key map (kbd "M-z") 'eshell)
-            (evil-define-key 'normal start-mode-map
-              (kbd "1") '(lambda () (interactive) (find-file "~/.config/doom/config.org"))
-              (kbd "2") '(lambda () (interactive) (find-file "~/.config/doom/init.el"))
-              (kbd "3") '(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
-              (kbd "4") '(lambda () (interactive) (find-file "~/.config/doom/eshell/aliases"))
-              (kbd "5") '(lambda () (interactive) (find-file "~/.config/doom/eshell/profile")))
-          map))
-
-(add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
-(provide 'start-mode)
+;; (setq initial-buffer-choice "~/.config/doom/start.org")
+;;
+;; (define-minor-mode start-mode
+;;   "Provide functions for custom start page."
+;;   :lighter " start"
+;;   :keymap (let ((map (make-sparse-keymap)))
+;;           ;;(define-key map (kbd "M-z") 'eshell)
+;;             (evil-define-key 'normal start-mode-map
+;;               (kbd "1") '(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+;;               (kbd "2") '(lambda () (interactive) (find-file "~/.config/doom/init.el"))
+;;               (kbd "3") '(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
+;;               (kbd "4") '(lambda () (interactive) (find-file "~/.config/doom/eshell/aliases"))
+;;               (kbd "5") '(lambda () (interactive) (find-file "~/.config/doom/eshell/profile")))
+;;           map))
+;;
+;; (add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
+;; (provide 'start-mode)
 #+end_src
 
 * TITLE BAR

@@ -78,6 +78,8 @@
 (setq delete-by-moving-to-trash t
       trash-directory "~/.local/share/Trash/files/")
 
+(setq fancy-splash-image (concat doom-private-dir "images/emacs-logo.png"))
+
 (setq doom-theme 'doom-ir-black)
 (map! :leader
       :desc "Load new theme" "h t" #'counsel-load-theme)
@@ -148,6 +150,8 @@
       :desc "Magit reset"  "g R" #'magit-reset) ;; Override Doom Emacs's default
 
 (setq auth-sources '("~/.authinfo"))
+(map! :leader
+      :desc "Forge add repository" "g a" #'forge-add-repository)
 
 (custom-set-faces
  '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight bold :family "variable-pitch"))))
@@ -559,22 +563,22 @@ it can be passed in POS."
       :desc "Add a buffer current perspective" "+" #'persp-add-buffer
       :desc "Remove perspective by name"       "-" #'persp-remove-by-name)
 
-(setq initial-buffer-choice "~/.config/doom/start.org")
-
-(define-minor-mode start-mode
-  "Provide functions for custom start page."
-  :lighter " start"
-  :keymap (let ((map (make-sparse-keymap)))
-          ;;(define-key map (kbd "M-z") 'eshell)
-            (evil-define-key 'normal start-mode-map
-              (kbd "1") '(lambda () (interactive) (find-file "~/.config/doom/config.org"))
-              (kbd "2") '(lambda () (interactive) (find-file "~/.config/doom/init.el"))
-              (kbd "3") '(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
-              (kbd "4") '(lambda () (interactive) (find-file "~/.config/doom/eshell/aliases"))
-              (kbd "5") '(lambda () (interactive) (find-file "~/.config/doom/eshell/profile")))
-          map))
-
-(add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
-(provide 'start-mode)
+;; (setq initial-buffer-choice "~/.config/doom/start.org")
+;;
+;; (define-minor-mode start-mode
+;;   "Provide functions for custom start page."
+;;   :lighter " start"
+;;   :keymap (let ((map (make-sparse-keymap)))
+;;           ;;(define-key map (kbd "M-z") 'eshell)
+;;             (evil-define-key 'normal start-mode-map
+;;               (kbd "1") '(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+;;               (kbd "2") '(lambda () (interactive) (find-file "~/.config/doom/init.el"))
+;;               (kbd "3") '(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
+;;               (kbd "4") '(lambda () (interactive) (find-file "~/.config/doom/eshell/aliases"))
+;;               (kbd "5") '(lambda () (interactive) (find-file "~/.config/doom/eshell/profile")))
+;;           map))
+;;
+;; (add-hook 'start-mode-hook 'read-only-mode) ;; make start.org read-only; use 'SPC t r' to toggle off read-only.
+;; (provide 'start-mode)
 
 (setq frame-title-format '("%b – Emacs"))
