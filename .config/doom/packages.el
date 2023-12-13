@@ -13,6 +13,7 @@
 (package! clippy)
 (package! dashboard)
 (package! emojify)
+(package! kele)
 (package! org-auto-tangle)
 (package! org-fancy-priorities)
 (package! org-web-tools)

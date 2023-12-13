@@ -105,23 +105,14 @@
 (evil-ex-define-cmd "wq" 'rh/ex-save-kill-buffer-and-close )
 
 (when window-system
-  (if  (eq system-type 'darwin)
-    (setq doom-font "VictorMono Nerd Font")
-    (setq doom-variable-pitch-font "Annai MN")
-    (setq doom-big-font "VictorMono Nerd Font"))
-  (if   (eq system-type 'gnu/linux)
-    (setq doom-font "VictorMono Nerd Font"))
-    (setq doom-variable-pitch-font "Annai MN")
-    (setq doom-big-font "VictorMono Nerd Font"))
-
   (if (> (display-pixel-height) 1080)
-    (setq doom-font-size 24)
-    (setq doom-variable-pitch-font-size 30)
-    (setq doom-big-font-size 48))
+    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 24)
+          doom-variable-pitch-font (font-spec :family "Annai MN" :size 30)
+          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 48)))
   (if (<= (display-pixel-height) 1080)
-    (setq doom-font-size 12)
-    (setq doom-variable-pitch-font-size 15)
-    (setq doom-big-font-size 24))
+    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
+          doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
+          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))))
 ;; (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
 ;;       doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
 ;;       doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))
@@ -131,6 +122,15 @@
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
+
+(map! :leader
+      (:prefix ("k" . "kubernetes")
+       :desc "Config" "." #'kele-config
+       :desc "Get" "g" #'kele-get
+       :desc "Kele mode" "k" #'kele-mode
+       :desc "List" "l" #'kele-list
+       (:prefix ("c" . "context")
+       :desc "Switch context" "s" #'kele-context-switch)))
 
 (after! neotree
   (setq neo-smart-open t

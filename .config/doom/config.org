@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2023-11-09 Thu 05:57]
+#+LAST-MODIFIED: [2023-12-11 Mon 01:42]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -22,6 +22,7 @@
 - [[#evil-tweaks][EVIL TWEAKS]]
   - [[#remap-wq-and-q-to-kill-buffer][Remap :wq and :q to kill buffer]]
 - [[#fonts][FONTS]]
+- [[#kele][KELE]]
 - [[#neotree][NEOTREE]]
 - [[#magit][MAGIT]]
   - [[#magit-forge][Magit-forge]]
@@ -296,23 +297,14 @@ I have also attempted to account for HiDPI displays by doubling the font size if
 
 #+BEGIN_SRC emacs-lisp
 (when window-system
-  (if  (eq system-type 'darwin)
-    (setq doom-font "VictorMono Nerd Font")
-    (setq doom-variable-pitch-font "Annai MN")
-    (setq doom-big-font "VictorMono Nerd Font"))
-  (if   (eq system-type 'gnu/linux)
-    (setq doom-font "VictorMono Nerd Font"))
-    (setq doom-variable-pitch-font "Annai MN")
-    (setq doom-big-font "VictorMono Nerd Font"))
-
   (if (> (display-pixel-height) 1080)
-    (setq doom-font-size 24)
-    (setq doom-variable-pitch-font-size 30)
-    (setq doom-big-font-size 48))
+    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 24)
+          doom-variable-pitch-font (font-spec :family "Annai MN" :size 30)
+          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 48)))
   (if (<= (display-pixel-height) 1080)
-    (setq doom-font-size 12)
-    (setq doom-variable-pitch-font-size 15)
-    (setq doom-big-font-size 24))
+    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
+          doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
+          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))))
 ;; (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
 ;;       doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
 ;;       doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))
@@ -323,6 +315,31 @@ I have also attempted to account for HiDPI displays by doubling the font size if
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 #+END_SRC
+
+* KELE
+
+Kele is a Kubernetes manager, allowing for easy managment of a Kubernetes cluster directly from Emacs. As it's an external package, Doom Emacs has no keybindings for it, so we're going to define some here.
+
+| COMMAND             | DESCRIPTION    | KEYBINDING |
+|---------------------+----------------+------------|
+| kele-config         | Config         | SPC k .    |
+| kele-context-switch | Switch context | SPC k c s  |
+| kele-get            | Get            | SPC k g    |
+| kele-mode           | Kele mode      | SPC k k    |
+| kele-list           | List           | SPC k l    |
+
+#+begin_src emacs-lisp
+(map! :leader
+      (:prefix ("k" . "kubernetes")
+       :desc "Config" "." #'kele-config
+       :desc "Get" "g" #'kele-get
+       :desc "Kele mode" "k" #'kele-mode
+       :desc "List" "l" #'kele-list
+       (:prefix ("c" . "context")
+       :desc "Switch context" "s" #'kele-context-switch)))
+
+#+end_src
+
 
 * NEOTREE
 
