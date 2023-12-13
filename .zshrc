@@ -134,4 +134,8 @@ export LESS='-Ri --mouse --wheel-lines=3'
 # macOS
 if [[ $(uname) == "Darwin" ]]; then
     export PATH="/opt/homebrew/opt/sphinx-doc/bin:$PATH"
+    export PATH="$(brew --prefix python)/libexec/bin:$PATH"
+    # Created by `pipx` on 2023-09-04 21:27:46
+    export PATH="$PATH:$HOME/.local/bin"
 fi
+
