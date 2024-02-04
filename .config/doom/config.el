@@ -104,18 +104,18 @@
 (evil-ex-define-cmd "q[uit]" 'rh/ex-kill-buffer-and-close )
 (evil-ex-define-cmd "wq" 'rh/ex-save-kill-buffer-and-close )
 
-(when window-system
-  (if (> (display-pixel-height) 1080)
-    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 24)
-          doom-variable-pitch-font (font-spec :family "Annai MN" :size 30)
-          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 48)))
-  (if (<= (display-pixel-height) 1080)
-    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
-          doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
-          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))))
-;; (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
-;;       doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
-;;       doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))
+;; (when window-system
+;;  (if (> (display-pixel-height) 1080)
+;;    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 24)
+;;          doom-variable-pitch-font (font-spec :family "Annai MN" :size 30)
+;;          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 48)))
+;;  (if (<= (display-pixel-height) 1080)
+;;    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
+;;          doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
+;;          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))))
+(setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
+      doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
+      doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))

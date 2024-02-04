@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2023-12-11 Mon 01:42]
+#+LAST-MODIFIED: [2024-02-04 Sun 11:37]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -293,21 +293,21 @@ Settings related to fonts within Doom Emacs:
 + 'font-lock-comment-face' -- for comments.
 + 'font-lock-keyword-face' -- for keywords with special significance like 'setq' in elisp.
 
-I have also attempted to account for HiDPI displays by doubling the font size if the screen size is larger than 1080 pixels in height.
+I have also attempted to account for HiDPI displays by doubling the font size if the screen size is larger than 1080 pixels in height. (Edit: This is now commented out as I've switched to Wayland native Emacs on Linux which fully supports HiDPI)
 
 #+BEGIN_SRC emacs-lisp
-(when window-system
-  (if (> (display-pixel-height) 1080)
-    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 24)
-          doom-variable-pitch-font (font-spec :family "Annai MN" :size 30)
-          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 48)))
-  (if (<= (display-pixel-height) 1080)
-    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
-          doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
-          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))))
-;; (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
-;;       doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
-;;       doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))
+;; (when window-system
+;;  (if (> (display-pixel-height) 1080)
+;;    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 24)
+;;          doom-variable-pitch-font (font-spec :family "Annai MN" :size 30)
+;;          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 48)))
+;;  (if (<= (display-pixel-height) 1080)
+;;    (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
+;;          doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
+;;          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))))
+(setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
+      doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
+      doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))
