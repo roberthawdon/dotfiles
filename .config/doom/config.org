@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2024-02-04 Sun 11:37]
+#+LAST-MODIFIED: [2024-03-28 Thu 02:58]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -30,6 +30,7 @@
 - [[#maximise-at-start][MAXIMISE AT START]]
 - [[#minimap][MINIMAP]]
 - [[#modeline][MODELINE]]
+- [[#no-title-bar][NO TITLE BAR]]
 - [[#open-specific-files][OPEN SPECIFIC FILES]]
 - [[#org-mode][ORG MODE]]
   - [[#org-agenda][Org-agenda]]
@@ -437,6 +438,14 @@ https://github.com/seagle0128/doom-modeline
       doom-modeline-bar-width 5   ;; sets right bar width
       doom-modeline-persp-name t  ;; adds perspective name to modeline
       doom-modeline-persp-icon t) ;; adds folder icon next to persp name
+#+end_src
+
+* NO TITLE BAR
+To get a little more real estate, we can remove the title bar, currently only set up on macOS:
+
+#+begin_src emacs-lisp
+(if  (eq system-type 'darwin)
+    (add-to-list 'default-frame-alist '(undecorated-round . t)))
 #+end_src
 
 * OPEN SPECIFIC FILES

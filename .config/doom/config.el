@@ -175,6 +175,9 @@
       doom-modeline-persp-name t  ;; adds perspective name to modeline
       doom-modeline-persp-icon t) ;; adds folder icon next to persp name
 
+(if  (eq system-type 'darwin)
+    (add-to-list 'default-frame-alist '(undecorated-round . t)))
+
 (map! :leader
       (:prefix ("=" . "open file")
        :desc "Edit start.org (start page)" "=" #'(lambda () (interactive) (find-file "~/.config/doom/start.org"))
