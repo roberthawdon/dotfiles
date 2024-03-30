@@ -549,6 +549,9 @@ it can be passed in POS."
 (map! :leader
       :desc "Insert publish tag" "i P" #'rh/ginsert-auto-publish)
 
+(map! :leader
+      :desc "Toggle org inline images" "t i" #'org-toggle-inline-images)
+
 (defun rh/force-org-rebuild-cache ()
   "Rebuild the `org-mode' and `org-roam' cache."
   (interactive)

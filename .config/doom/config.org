@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2024-03-28 Thu 02:58]
+#+LAST-MODIFIED: [2024-03-30 Sat 02:21]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -42,6 +42,7 @@
   - [[#org-priorities][Org Priorities]]
   - [[#org-roam][Org-roam]]
   - [[#org-roam-auto-publish][Org-roam auto publish]]
+  - [[#org-toggle-inline-images][Org-toggle-inline-images]]
   - [[#rebuild-org-cache][Rebuild Org Cache]]
 - [[#perspective][PERSPECTIVE]]
 - [[#start-page-currently-disabled][START PAGE (Currently disabled)]]
@@ -905,6 +906,14 @@ I'm using Org-roam to build a knowledgebase, but I don't want all of my notes to
 
 (map! :leader
       :desc "Insert publish tag" "i P" #'rh/ginsert-auto-publish)
+#+end_src
+
+** Org-toggle-inline-images
+By default, inline images are toggled with =z i=, however, I'm probably going to forget this, and would rathert have it tucked away in the Toggles section, so we're going to map it to =SPC t i=:
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Toggle org inline images" "t i" #'org-toggle-inline-images)
 #+end_src
 
 
