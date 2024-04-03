@@ -89,6 +89,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 export PATH=$HOME/.config/emacs/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 
 alias s=show
 alias sr="show --running"
