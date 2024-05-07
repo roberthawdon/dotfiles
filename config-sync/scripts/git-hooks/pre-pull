@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-git checkout HEAD -- .config/nvim/lazy-lock.json
+config checkout HEAD -- .config/nvim/lazy-lock.json
