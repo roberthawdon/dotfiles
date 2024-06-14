@@ -21,6 +21,21 @@ set $term foot
 # set $menu dmenu_path | wmenu | xargs swaymsg exec --
 set $menu fuzzel 
 
+# make sure we use a tile layout
+workspace_layout default
+
+# hide border when only one window
+hide_edge_borders --i3 smart
+
+#
+#No titlebars
+#
+default_border none 
+for_window [class="^.*"] border pixel 1
+for_window [title="^.*"] title_format ""
+default_border normal 0
+default_floating_border normal 0
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
