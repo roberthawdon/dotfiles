@@ -186,7 +186,8 @@
        :desc "Edit doom packages.el"       "p" #'(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
        (:prefix ("a" . "Edit agendas")
        :desc "Edit work agenda"            "w" #'(lambda () (interactive) (find-file "~/Org/agendas/work.org"))
-       :desc "Edit personal agenda"        "p" #'(lambda () (interactive) (find-file "~/Org/agendas/personal.org")))))
+       :desc "Edit personal agenda"        "p" #'(lambda () (interactive) (find-file "~/Org/agendas/personal.org"))
+       :desc "Edit business agenda"        "b" #'(lambda () (interactive) (find-file "~/Org/agendas/business.org")))))
 
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
@@ -266,6 +267,33 @@
 
             (agenda "")
             (alltodo ""))))))
+
+(defun rh/org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/DONE" 'file)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/APPROVED" 'file)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/REJECTED" 'file)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/CANCELLED" 'file)
+)
+
+(map! :leader
+      :desc "Archive Done Tasks" "m D" #'rh/org-archive-done-tasks)
 
 (use-package! org-auto-tangle
   :defer t

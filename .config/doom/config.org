@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2024-03-30 Sat 02:21]
+#+LAST-MODIFIED: [2024-09-16 Mon 20:50]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -34,6 +34,7 @@
 - [[#open-specific-files][OPEN SPECIFIC FILES]]
 - [[#org-mode][ORG MODE]]
   - [[#org-agenda][Org-agenda]]
+  - [[#org-agenda-done-tasks][Org-Agenda-Done-Tasks]]
   - [[#org-auto-tangle][Org-auto-tangle]]
   - [[#org-export][Org export]]
   - [[#org-file-properties][Org file properties]]
@@ -455,14 +456,15 @@ Keybindings to open files that I work with all the time using the find-file comm
 
 =NOTE=: Doom Emacs already has a function 'doom/open-private-config' set to the keybinding 'SPC f p'.  This allows you to open any file in your HOME/.config/doom directory, so the following keybindings that I created are not really necessary, but I created this section as an example of how to to create bindings that open specific files on your system.
 
-| PATH TO FILE                                                                | DESCRIPTION                 | KEYBINDING |
-|-----------------------------------------------------------------------------+-----------------------------+------------|
-| ~/.config/doom/start.org                                                    | /Edit start.org (start page)/ | SPC = =    |
-| ~/.config/doom/config.org                                                   | /Edit doom config.org/        | SPC = c    |
-| ~/.config/doom/init.el                                                      | /Edit doom init.el/           | SPC = i    |
-| ~/.config/doom/packages.el                                                  | /Edit doom packages.el/       | SPC = p    |
+| PATH TO FILE               | DESCRIPTION                 | KEYBINDING |
+|----------------------------+-----------------------------+------------|
+| ~/.config/doom/start.org   | /Edit start.org (start page)/ | SPC = =    |
+| ~/.config/doom/config.org  | /Edit doom config.org/        | SPC = c    |
+| ~/.config/doom/init.el     | /Edit doom init.el/           | SPC = i    |
+| ~/.config/doom/packages.el | /Edit doom packages.el/       | SPC = p    |
 | ~/Org/agendas/work.org     | Edit work agenda file       | SPC = a w  |
 | ~/Org/agendas/personal.org | Edit personal agenda file   | SPC = a p  |
+| ~/Org/agendas/business.org | Edit business agenda file   | SPC = a b  |
 
 #+BEGIN_SRC emacs-lisp
 (map! :leader
@@ -473,7 +475,8 @@ Keybindings to open files that I work with all the time using the find-file comm
        :desc "Edit doom packages.el"       "p" #'(lambda () (interactive) (find-file "~/.config/doom/packages.el"))
        (:prefix ("a" . "Edit agendas")
        :desc "Edit work agenda"            "w" #'(lambda () (interactive) (find-file "~/Org/agendas/work.org"))
-       :desc "Edit personal agenda"        "p" #'(lambda () (interactive) (find-file "~/Org/agendas/personal.org")))))
+       :desc "Edit personal agenda"        "p" #'(lambda () (interactive) (find-file "~/Org/agendas/personal.org"))
+       :desc "Edit business agenda"        "b" #'(lambda () (interactive) (find-file "~/Org/agendas/business.org")))))
 #+END_SRC
 
 * ORG MODE
@@ -565,6 +568,43 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
 
             (agenda "")
             (alltodo ""))))))
+#+end_src
+
+** Org-Agenda-Done-Tasks
+
+I'd like an easy way to archive completed tasks. So I've written a custom command =rh/org-archive-done-tasks= and set up a keybinding to run it easily:
+
+| COMMAND                   | DESCRIPTION                            | KEYBINDING |
+|---------------------------+----------------------------------------+------------|
+| rh/org-archive-done-tasks | Archives all completed tasks in agenda | SPC m D    |
+
+#+begin_src emacs-lisp
+(defun rh/org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/DONE" 'file)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/APPROVED" 'file)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/REJECTED" 'file)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/CANCELLED" 'file)
+)
+
+(map! :leader
+      :desc "Archive Done Tasks" "m D" #'rh/org-archive-done-tasks)
 #+end_src
 
 ** Org-auto-tangle
