@@ -212,7 +212,8 @@
           '((sequence
              "TODO(t)"           ; A task that is ready to be tackled
              "TO REVIEW(e)"      ; A change that is ready to be reviewed
-             "IN PROGRESS(i)"    ; A tast that is in progress
+             "IN PROGRESS(i)"    ; A task that is in progress
+             "FIXME(f)"          ; A task that has been completed but broken
              "PROJ(p)"           ; A project that contains other tasks
              "BLOG(b)"           ; Blog writing assignments
              "DOCUMENT(o)"       ; Document writing assignments (split sections into tasks)
@@ -544,6 +545,11 @@ it can be passed in POS."
     org-default-priority ?C
     org-lowest-priority ?E
 )
+
+(setq hl-todo-keyword-faces
+      '(("FIXME"  . "#FF0000")
+        ("PROJ"  . "#A020F0")
+        ("BLOG"   . "#1E90FF")))
 
 (after! org
   (setq org-roam-directory "~/Org/roam/")

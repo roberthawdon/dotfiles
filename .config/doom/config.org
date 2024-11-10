@@ -41,6 +41,7 @@
   - [[#org-fonts][Org fonts]]
   - [[#org-journal][Org-journal]]
   - [[#org-priorities][Org Priorities]]
+  - [[#org-highlight-todo][Org Highlight TODO]]
   - [[#org-roam][Org-roam]]
   - [[#org-roam-auto-publish][Org-roam auto publish]]
   - [[#org-toggle-inline-images][Org-toggle-inline-images]]
@@ -510,7 +511,8 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
           '((sequence
              "TODO(t)"           ; A task that is ready to be tackled
              "TO REVIEW(e)"      ; A change that is ready to be reviewed
-             "IN PROGRESS(i)"    ; A tast that is in progress
+             "IN PROGRESS(i)"    ; A task that is in progress
+             "FIXME(f)"          ; A task that has been completed but broken
              "PROJ(p)"           ; A project that contains other tasks
              "BLOG(b)"           ; Blog writing assignments
              "DOCUMENT(o)"       ; Document writing assignments (split sections into tasks)
@@ -521,6 +523,7 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
              "REJECTED(r)"       ; Change has been rejected
              "CANCELLED(c)" )))) ; Task has been cancelled
 #+end_src
+
 
 ** Org-agenda
 
@@ -893,6 +896,15 @@ By default, Org only ships with 3 priority settings, let's change that.
     org-default-priority ?C
     org-lowest-priority ?E
 )
+#+end_src
+
+** Org Highlight TODO
+
+#+begin_src emacs-lisp
+(setq hl-todo-keyword-faces
+      '(("FIXME"  . "#FF0000")
+        ("PROJ"  . "#A020F0")
+        ("BLOG"   . "#1E90FF")))
 #+end_src
 
 ** Org-roam
