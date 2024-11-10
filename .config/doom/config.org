@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2024-09-16 Mon 20:50]
+#+LAST-MODIFIED: [2024-11-10 Sun 02:23]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -48,6 +48,7 @@
 - [[#perspective][PERSPECTIVE]]
 - [[#start-page-currently-disabled][START PAGE (Currently disabled)]]
 - [[#title-bar][TITLE BAR]]
+- [[#vba-mode][VBA MODE]]
 
 * ABOUT THIS CONFIG
 This is my personal Doom Emacs config. Based heavily on the work of Derek Taylor (https://gitlab.com/dwt1/dotfiles) with a few modifications to suit my needs.
@@ -1023,4 +1024,13 @@ Removing the name "Doom" from "Doom Emacs" on the off chance that someone at wor
 
 #+begin_src emacs-lisp
 (setq frame-title-format '("%b – Emacs"))
+#+end_src
+
+* VBA MODE
+Some config to enable vba-mode from Yoshihiko Kakutani on GitHub: https://github.com/ayanyan/vba-mode
+
+#+begin_src emacs-lisp
+(autoload 'vba-mode "vba-mode" "Turn a mode for VBA on." t nil)
+(setq auto-mode-alist
+      (cons '("\\.vba?$" . vba-mode) auto-mode-alist))
 #+end_src

@@ -616,3 +616,7 @@ it can be passed in POS."
 ;; (provide 'start-mode)
 
 (setq frame-title-format '("%b – Emacs"))
+
+(autoload 'vba-mode "vba-mode" "Turn a mode for VBA on." t nil)
+(setq auto-mode-alist
+      (cons '("\\.vba?$" . vba-mode) auto-mode-alist))
