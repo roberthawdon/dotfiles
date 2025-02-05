@@ -4,7 +4,7 @@ return {
     config = function()
         require("lualine").setup {
             options = {
-                theme = 'molokai', -- or any theme you prefer
+                theme = 'powerline_dark', -- or any theme you prefer
                 -- section_separators = '',
                 -- component_separators = '',
             },
