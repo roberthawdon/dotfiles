@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2024-11-10 Sun 02:23]
+#+LAST-MODIFIED: [2025-04-01 Tue 15:45]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -44,6 +44,7 @@
   - [[#org-highlight-todo][Org Highlight TODO]]
   - [[#org-roam][Org-roam]]
   - [[#org-roam-auto-publish][Org-roam auto publish]]
+  - [[#org-tempo][Org-tempo]]
   - [[#org-toggle-inline-images][Org-toggle-inline-images]]
   - [[#rebuild-org-cache][Rebuild Org Cache]]
 - [[#perspective][PERSPECTIVE]]
@@ -960,6 +961,26 @@ I'm using Org-roam to build a knowledgebase, but I don't want all of my notes to
 (map! :leader
       :desc "Insert publish tag" "i P" #'rh/ginsert-auto-publish)
 #+end_src
+
+** Org-tempo
+
+Org-tempo allows for quick insertion of templates. Great for code blocks. I have added a few custom template shortcuts. For example, creating the block below, in emacs-lisp can be achived by =C-c C-, el=.
+
+#+begin_src emacs-lisp
+(use-package! org-tempo
+  :after org
+  )
+(after! org-tempo
+    ;; This is needed as of Org 9.2
+    (require 'org-tempo)
+
+    (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+    (add-to-list 'org-structure-template-alist '("sq" . "src sql"))
+    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+    (add-to-list 'org-structure-template-alist '("li" . "src lisp"))
+    (add-to-list 'org-structure-template-alist '("py" . "src python")))
+#+end_src
+
 
 ** Org-toggle-inline-images
 By default, inline images are toggled with =z i=, however, I'm probably going to forget this, and would rathert have it tucked away in the Toggles section, so we're going to map it to =SPC t i=:

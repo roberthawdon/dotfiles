@@ -583,6 +583,19 @@ it can be passed in POS."
 (map! :leader
       :desc "Insert publish tag" "i P" #'rh/ginsert-auto-publish)
 
+(use-package! org-tempo
+  :after org
+  )
+(after! org-tempo
+    ;; This is needed as of Org 9.2
+    (require 'org-tempo)
+
+    (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+    (add-to-list 'org-structure-template-alist '("sq" . "src sql"))
+    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+    (add-to-list 'org-structure-template-alist '("li" . "src lisp"))
+    (add-to-list 'org-structure-template-alist '("py" . "src python")))
+
 (map! :leader
       :desc "Toggle org inline images" "t i" #'org-toggle-inline-images)
 
