@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2025-04-01 Tue 15:45]
+#+LAST-MODIFIED: [2025-04-10 Thu 13:52]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -484,7 +484,7 @@ Keybindings to open files that I work with all the time using the find-file comm
 
 * ORG MODE
 
-This is config for Org Mode, it has been mainly wrapped in `(after! org)` as without it, it may load in before Doom's config and get overritten later. I have also enabled org-journal, org-superstar and org-roam by adding (+journal +pretty +roam2) to the org section of my Doom Emacs init.el.
+This is config for Org Mode, it has been mainly wrapped in `(after! org)` as without it, it may load in before Doom's config and get overritten later. I have also enabled org-journal, org-modern, and org-roam by adding (+journal +pretty +roam2) to the org section of my Doom Emacs init.el.
 
 =Note:= I have set my org-directory to a directory in Dropbox which is shared between my personal and work account. The idea here is to be able to sync my Org work between my personal and work machines. As my work machine and personal machine are running different operating systems (macOS and Linux), Dropbox's data directory is in different locations. To get around this, I've created a common Symlink on both devices in the home directory.
 
@@ -495,8 +495,14 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
   (setq org-directory "~/Org/"
         org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-ellipsis " ▼ "
-        org-superstar-headline-bullets-list '("◉" "●" "○" "◆" "●" "○" "◆")
-        org-superstar-itembullet-alist '((?+ . ?➤) (?- . ?✦)) ; changes +/- symbols in item lists
+        org-modern-fold-stars
+            '(("▶" . "▼")
+                ("▷" . "▽")
+                ;; ("⯈" . "⯆")
+                ("▷" . "▽")
+                ("▹" . "▿")
+                ("▸" . "▾"))
+        org-modern-list '((?+ . "➤"))
         ;; org-log-done 'time
         org-log-done 'note
         org-hide-emphasis-markers t
@@ -532,23 +538,21 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
 (after! org
   (setq org-agenda-files '("~/Org/agendas/")))
 
-(after! org-fancy-priorities
-  (setq
-     ;; org-fancy-priorities-list '("[A]" "[B]" "[C]")
-     ;; org-fancy-priorities-list '("❗" "[B]" "[C]")
-     ;; org-fancy-priorities-list '("🟥" "🟧" "🟨")
-     org-fancy-priorities-list '((?A . "❗ [Highest Priority]")
-                                  (?B . "🟥 [High Priority]")
-                                  (?C . "🟨 [Medium Priority]")
-                                  (?D . "🟩 [Low Priority]")
-                                  (?E . "☕ [Non Priority]"))
-     org-priority-faces
-     '((?A :foreground "#ff0000" :weight bold)
-       (?B :foreground "#ff6c6b" :weight bold)
-       (?C :foreground "#97d138" :weight bold)
-       (?D :foreground "#25be4b" :weight bold)
-       (?E :foreground "#c678dd" :weight bold))
-     org-agenda-block-separator 8411)
+  ;; Customize priority display
+  (setq org-modern-priority
+        '((?A . "❗ [Highest Priority]")
+          (?B . "🟥 [High Priority]")
+          (?C . "🟨 [Medium Priority]")
+          (?D . "🟩 [Low Priority]")
+          (?E . "☕ [Non Priority]")))
+
+  ;; Customize priority faces
+  (setq org-priority-faces
+        '((?A :foreground "#ff0000" :weight bold)
+          (?B :foreground "#ff6c6b" :weight bold)
+          (?C :foreground "#97d138" :weight bold)
+          (?D :foreground "#25be4b" :weight bold)
+          (?E :foreground "#c678dd" :weight bold)))
 
   (setq org-agenda-custom-commands
         '(("v" "A better agenda view"
@@ -572,7 +576,7 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
                    (org-agenda-overriding-header "Tasks marked with customtag:")))
 
             (agenda "")
-            (alltodo ""))))))
+            (alltodo "")))))
 #+end_src
 
 ** Org-Agenda-Done-Tasks

@@ -195,8 +195,14 @@
   (setq org-directory "~/Org/"
         org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-ellipsis " ▼ "
-        org-superstar-headline-bullets-list '("◉" "●" "○" "◆" "●" "○" "◆")
-        org-superstar-itembullet-alist '((?+ . ?➤) (?- . ?✦)) ; changes +/- symbols in item lists
+        org-modern-fold-stars
+            '(("▶" . "▼")
+                ("▷" . "▽")
+                ;; ("⯈" . "⯆")
+                ("▷" . "▽")
+                ("▹" . "▿")
+                ("▸" . "▾"))
+        org-modern-list '((?+ . "➤"))
         ;; org-log-done 'time
         org-log-done 'note
         org-hide-emphasis-markers t
@@ -227,23 +233,21 @@
 (after! org
   (setq org-agenda-files '("~/Org/agendas/")))
 
-(after! org-fancy-priorities
-  (setq
-     ;; org-fancy-priorities-list '("[A]" "[B]" "[C]")
-     ;; org-fancy-priorities-list '("❗" "[B]" "[C]")
-     ;; org-fancy-priorities-list '("🟥" "🟧" "🟨")
-     org-fancy-priorities-list '((?A . "❗ [Highest Priority]")
-                                  (?B . "🟥 [High Priority]")
-                                  (?C . "🟨 [Medium Priority]")
-                                  (?D . "🟩 [Low Priority]")
-                                  (?E . "☕ [Non Priority]"))
-     org-priority-faces
-     '((?A :foreground "#ff0000" :weight bold)
-       (?B :foreground "#ff6c6b" :weight bold)
-       (?C :foreground "#97d138" :weight bold)
-       (?D :foreground "#25be4b" :weight bold)
-       (?E :foreground "#c678dd" :weight bold))
-     org-agenda-block-separator 8411)
+  ;; Customize priority display
+  (setq org-modern-priority
+        '((?A . "❗ [Highest Priority]")
+          (?B . "🟥 [High Priority]")
+          (?C . "🟨 [Medium Priority]")
+          (?D . "🟩 [Low Priority]")
+          (?E . "☕ [Non Priority]")))
+
+  ;; Customize priority faces
+  (setq org-priority-faces
+        '((?A :foreground "#ff0000" :weight bold)
+          (?B :foreground "#ff6c6b" :weight bold)
+          (?C :foreground "#97d138" :weight bold)
+          (?D :foreground "#25be4b" :weight bold)
+          (?E :foreground "#c678dd" :weight bold)))
 
   (setq org-agenda-custom-commands
         '(("v" "A better agenda view"
@@ -267,7 +271,7 @@
                    (org-agenda-overriding-header "Tasks marked with customtag:")))
 
             (agenda "")
-            (alltodo ""))))))
+            (alltodo "")))))
 
 (defun rh/org-archive-done-tasks ()
   (interactive)
