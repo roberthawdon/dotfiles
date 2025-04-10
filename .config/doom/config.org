@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2025-04-10 Thu 13:52]
+#+LAST-MODIFIED: [2025-04-10 Thu 14:45]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -498,7 +498,7 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
         org-modern-fold-stars
             '(("▶" . "▼")
                 ("▷" . "▽")
-                ;; ("⯈" . "⯆")
+                ("⯈" . "⯆")
                 ("▷" . "▽")
                 ("▹" . "▿")
                 ("▸" . "▾"))
