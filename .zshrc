@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(sudo macos git history tmux kubectl zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(sudo macos git history tmux kubectl zsh-autosuggestions zsh-syntax-highlighting ohmyzsh-full-autoupdate)
 
 ZSH_TMUX_AUTOSTART=true
 # ZSH_TMUX_ITERM2=true
@@ -139,4 +139,5 @@ if [[ $(uname) == "Darwin" ]]; then
     # Created by `pipx` on 2023-09-04 21:27:46
     export PATH="$PATH:$HOME/.local/bin"
 fi
+
 
