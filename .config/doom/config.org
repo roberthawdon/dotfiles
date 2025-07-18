@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2025-04-10 Thu 14:45]
+#+LAST-MODIFIED: [2025-07-18 Fri 23:34]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -512,6 +512,7 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
           '(("google" . "http://www.google.com/search?q=")
             ("arch-wiki" . "https://wiki.archlinux.org/index.php/")
             ("ddg" . "https://duckduckgo.com/?q=")
+            ("kagi" . "https://kagi.com/search?q=")
             ("wiki" . "https://en.wikipedia.org/wiki/"))
         org-table-convert-region-max-lines 20000
         org-todo-keywords        ; This overwrites the default Doom org-todo-keywords

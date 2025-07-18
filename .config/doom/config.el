@@ -212,6 +212,7 @@
           '(("google" . "http://www.google.com/search?q=")
             ("arch-wiki" . "https://wiki.archlinux.org/index.php/")
             ("ddg" . "https://duckduckgo.com/?q=")
+            ("kagi" . "https://kagi.com/search?q=")
             ("wiki" . "https://en.wikipedia.org/wiki/"))
         org-table-convert-region-max-lines 20000
         org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
