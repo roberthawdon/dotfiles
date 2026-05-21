@@ -91,6 +91,11 @@ source $ZSH/oh-my-zsh.sh
 export PATH=$HOME/.config/emacs/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 
+# If we have snap
+if [ -d "/snap/bin" ]; then
+	export PATH=/snap/bin:$PATH
+fi
+
 alias s=show
 alias sr="show --running"
 alias git=hub
