@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2026-05-21 Thu 10:59]
+#+LAST-MODIFIED: [2026-05-22 Fri 09:53]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -415,8 +415,10 @@ Before you can interact with remote services, you need to add the repository to 
 
 I quite like Emacs to use the full screen at start, so lets add the following to make that dream a reality.
 
+Currently disabled as I have moved this config to init.el which allows this to work with both Emacs GUI and Client mode (when running Emacs as a daemon)
+
 #+begin_src emacs-lisp
-(add-hook 'window-setup-hook #'toggle-frame-maximized)
+; (add-hook 'window-setup-hook #'toggle-frame-maximized)
 #+end_src
 
 * MINIMAP

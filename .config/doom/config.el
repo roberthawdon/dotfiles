@@ -162,7 +162,7 @@
  '(markdown-header-face-5 ((t (:inherit markdown-header-face :height 1.3))))
  '(markdown-header-face-6 ((t (:inherit markdown-header-face :height 1.2)))))
 
-(add-hook 'window-setup-hook #'toggle-frame-maximized)
+; (add-hook 'window-setup-hook #'toggle-frame-maximized)
 
 (setq minimap-window-location 'right)
 (map! :leader
