@@ -146,4 +146,8 @@ if [[ $(uname) == "Darwin" ]]; then
     export PATH="$PATH:$HOME/.local/bin"
 fi
 
+# WSL (Windows Subsystem for Linux)
+if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+    export BROWSER='/mnt/c/Windows/explorer.exe'
+fi
 
