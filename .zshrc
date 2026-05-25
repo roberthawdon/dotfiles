@@ -102,6 +102,7 @@ alias git=hub
 alias vi=nvim
 alias vim=nvim
 alias ec="emacsclient --create-frame"
+alias emacs="emacsclient -nw"
 
 # A handy dotfiles repo trick from: https://www.atlassian.com/git/tutorials/dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
