@@ -1,0 +1,5 @@
+[user]
+	email = git@robertianhawdon.me.uk
+	name = Robert Ian Hawdon
+[core]
+	excludesFile = ~/.gitignore
