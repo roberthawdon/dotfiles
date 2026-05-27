@@ -3,3 +3,5 @@
 	name = Robert Ian Hawdon
 [core]
 	excludesFile = ~/.gitignore
+[init]
+	defaultBranch = main
