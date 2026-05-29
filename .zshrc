@@ -152,3 +152,9 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
     export BROWSER='/mnt/c/Windows/explorer.exe'
 fi
 
+# If Linuxbrew is installed
+if [ -d /home/linuxbrew ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+fi
+
+
