@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2026-05-22 Fri 09:53]
+#+LAST-MODIFIED: [2026-06-01 Mon 18:03]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -47,6 +47,7 @@
   - [[#org-tempo][Org-tempo]]
   - [[#org-toggle-inline-images][Org-toggle-inline-images]]
   - [[#rebuild-org-cache][Rebuild Org Cache]]
+  - [[#rename-buffer-when-dealing-with-org-files-that-contain-a-title-tag][Rename buffer when dealing with Org files that contain a title tag]]
 - [[#perspective][PERSPECTIVE]]
 - [[#start-page-currently-disabled][START PAGE (Currently disabled)]]
 - [[#title-bar][TITLE BAR]]
@@ -539,7 +540,7 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
 
 #+begin_src emacs-lisp
 (after! org
-  (setq org-agenda-files '("~/Org/agendas/")))
+  (setq org-agenda-files '("~/Org/agendas/"))
 
   ;; Customize priority display
   (setq org-modern-priority
@@ -579,7 +580,7 @@ This is config for Org Mode, it has been mainly wrapped in `(after! org)` as wit
                    (org-agenda-overriding-header "Tasks marked with customtag:")))
 
             (agenda "")
-            (alltodo "")))))
+            (alltodo ""))))))
 #+end_src
 
 ** Org-Agenda-Done-Tasks
@@ -1009,6 +1010,35 @@ By default, inline images are toggled with =z i=, however, I'm probably going to
   ;; followed by `org-roam-db-sync'
   (org-roam-db-sync)
   (org-roam-update-org-id-locations))
+#+end_src
+
+** Rename buffer when dealing with Org files that contain a title tag
+
+When dealing with Org files, especially ones from Org-Roam where I have the filenames as date codes, it can be difficult to find existing open buffers due to the obscure names. Here I have a function to rename the buffer to the title of the Org document. This will update on file open and file save, just in case we change the title after opening the file. This will also remove any appended numbers in the case of having two files with the same title.
+
+#+begin_src emacs-lisp
+(defun rh/rename-org-buffer-to-title ()
+  "Rename the current buffer to the value of the #+title: property (case-insensitive).
+If another buffer with that name already exists, append <N>.
+Also re-renames other Org buffers so they reclaim base names when freed."
+  (when (and (derived-mode-p 'org-mode)
+             (fboundp 'org-collect-keywords))
+    (let ((title (cadr (assoc "TITLE" (org-collect-keywords '("TITLE"))))))
+      (when title
+        (rename-buffer (generate-new-buffer-name title))
+        (dolist (buf (buffer-list))
+          (with-current-buffer buf
+            (when (and (derived-mode-p 'org-mode)
+                       (not (eq buf (current-buffer))))
+              (let ((other-title (cadr (assoc "TITLE" (org-collect-keywords '("TITLE"))))))
+                (when other-title
+                  (rename-buffer (generate-new-buffer-name other-title)))))))))))
+
+;; Rename on file open
+(add-hook 'find-file-hook #'rh/rename-org-buffer-to-title)
+
+;; Rename on save (catches title changes)
+(add-hook 'after-save-hook #'rh/rename-org-buffer-to-title)
 #+end_src
 
 * PERSPECTIVE

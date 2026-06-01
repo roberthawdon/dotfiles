@@ -232,7 +232,7 @@
              "CANCELLED(c)" )))) ; Task has been cancelled
 
 (after! org
-  (setq org-agenda-files '("~/Org/agendas/")))
+  (setq org-agenda-files '("~/Org/agendas/"))
 
   ;; Customize priority display
   (setq org-modern-priority
@@ -272,7 +272,7 @@
                    (org-agenda-overriding-header "Tasks marked with customtag:")))
 
             (agenda "")
-            (alltodo "")))))
+            (alltodo ""))))))
 
 (defun rh/org-archive-done-tasks ()
   (interactive)
@@ -612,6 +612,29 @@ it can be passed in POS."
   ;; followed by `org-roam-db-sync'
   (org-roam-db-sync)
   (org-roam-update-org-id-locations))
+
+(defun rh/rename-org-buffer-to-title ()
+  "Rename the current buffer to the value of the #+title: property (case-insensitive).
+If another buffer with that name already exists, append <N>.
+Also re-renames other Org buffers so they reclaim base names when freed."
+  (when (and (derived-mode-p 'org-mode)
+             (fboundp 'org-collect-keywords))
+    (let ((title (cadr (assoc "TITLE" (org-collect-keywords '("TITLE"))))))
+      (when title
+        (rename-buffer (generate-new-buffer-name title))
+        (dolist (buf (buffer-list))
+          (with-current-buffer buf
+            (when (and (derived-mode-p 'org-mode)
+                       (not (eq buf (current-buffer))))
+              (let ((other-title (cadr (assoc "TITLE" (org-collect-keywords '("TITLE"))))))
+                (when other-title
+                  (rename-buffer (generate-new-buffer-name other-title)))))))))))
+
+;; Rename on file open
+(add-hook 'find-file-hook #'rh/rename-org-buffer-to-title)
+
+;; Rename on save (catches title changes)
+(add-hook 'after-save-hook #'rh/rename-org-buffer-to-title)
 
 (map! :leader
       :desc "Switch to perspective NAME"       "DEL" #'persp-switch
