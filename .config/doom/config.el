@@ -22,7 +22,9 @@
 (after! centaur-tabs
     (defun centaur-tabs-do-close (event)
         (interactive "e")
-        (centaur-tabs-do-select event)))
+        (centaur-tabs-do-select event))
+
+(setq centaur-tabs-close-button ""))
 
 (map! :leader
       (:prefix ("c h" . "Help info from Clippy")

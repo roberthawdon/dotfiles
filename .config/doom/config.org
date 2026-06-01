@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2026-06-01 Mon 20:31]
+#+LAST-MODIFIED: [2026-06-01 Mon 20:34]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -102,7 +102,9 @@ There seems to be a long running bug where clicking on tabs can close them. A su
 (after! centaur-tabs
     (defun centaur-tabs-do-close (event)
         (interactive "e")
-        (centaur-tabs-do-select event)))
+        (centaur-tabs-do-select event))
+
+(setq centaur-tabs-close-button ""))
 #+end_src
 
 * CLIPPY
