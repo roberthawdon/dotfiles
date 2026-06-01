@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2026-06-01 Mon 18:03]
+#+LAST-MODIFIED: [2026-06-01 Mon 20:31]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -95,6 +95,15 @@ To use tabs in Doom Emacs, be sure to uncomment "tabs" in Doom's init.el.  Displ
                                                (kbd "g <down>")  'centaur-tabs-forward-group
                                                (kbd "g <up>")    'centaur-tabs-backward-group)
 #+END_SRC
+
+There seems to be a long running bug where clicking on tabs can close them. A suggested workaround is to "[[https://github.com/ema2159/centaur-tabs/issues/225#issuecomment-2564425923][nuke centaur-tabs-do-close]]".
+
+#+begin_src emacs-lisp
+(after! centaur-tabs
+    (defun centaur-tabs-do-close (event)
+        (interactive "e")
+        (centaur-tabs-do-select event)))
+#+end_src
 
 * CLIPPY
 

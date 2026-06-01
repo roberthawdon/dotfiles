@@ -19,6 +19,11 @@
                                                (kbd "g <down>")  'centaur-tabs-forward-group
                                                (kbd "g <up>")    'centaur-tabs-backward-group)
 
+(after! centaur-tabs
+    (defun centaur-tabs-do-close (event)
+        (interactive "e")
+        (centaur-tabs-do-select event)))
+
 (map! :leader
       (:prefix ("c h" . "Help info from Clippy")
        :desc "Clippy describes function under point" "f" #'clippy-describe-function
