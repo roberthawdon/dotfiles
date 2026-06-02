@@ -171,10 +171,10 @@
 
 ; (add-hook 'window-setup-hook #'toggle-frame-maximized)
 
-(setq minimap-window-location 'right)
-(map! :leader
-      (:prefix ("t" . "toggle")
-       :desc "Toggle minimap-mode" "m" #'minimap-mode))
+; (setq minimap-window-location 'right)
+; (map! :leader
+;       (:prefix ("t" . "toggle")
+;        :desc "Toggle minimap-mode" "m" #'minimap-mode))
 
 (set-face-attribute 'mode-line nil :font "VictorMono Nerd Font")
 (setq doom-modeline-height 12     ;; sets modeline height
@@ -628,14 +628,22 @@ Also re-renames other Org buffers so they reclaim base names when freed."
              (fboundp 'org-collect-keywords))
     (let ((title (cadr (assoc "TITLE" (org-collect-keywords '("TITLE"))))))
       (when title
-        (rename-buffer (generate-new-buffer-name title))
-        (dolist (buf (buffer-list))
-          (with-current-buffer buf
-            (when (and (derived-mode-p 'org-mode)
-                       (not (eq buf (current-buffer))))
-              (let ((other-title (cadr (assoc "TITLE" (org-collect-keywords '("TITLE"))))))
-                (when other-title
-                  (rename-buffer (generate-new-buffer-name other-title)))))))))))
+        ;; Skip if the current buffer name already matches the title
+        ;; (with or without a <N> suffix)
+        (unless (string-match-p (concat "^" (regexp-quote title) "\\(?:<[0-9]+>\\)?$")
+                                (buffer-name))
+          (rename-buffer (generate-new-buffer-name title))
+          ;; Re-evaluate all other Org buffers' names so they can
+          ;; drop stale <N> suffixes
+          (dolist (buf (buffer-list))
+            (with-current-buffer buf
+              (when (and (derived-mode-p 'org-mode)
+                         (not (eq buf (current-buffer))))
+                (let ((other-title (cadr (assoc "TITLE" (org-collect-keywords '("TITLE"))))))
+                  (when other-title
+                    (unless (string-match-p (concat "^" (regexp-quote other-title) "\\(?:<[0-9]+>\\)?$")
+                                            (buffer-name))
+                      (rename-buffer (generate-new-buffer-name other-title)))))))))))))
 
 ;; Rename on file open
 (add-hook 'find-file-hook #'rh/rename-org-buffer-to-title)

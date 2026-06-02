@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2026-06-01 Mon 20:34]
+#+LAST-MODIFIED: [2026-06-02 Tue 16:36]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -436,15 +436,17 @@ Currently disabled as I have moved this config to init.el which allows this to w
 * MINIMAP
 A minimap sidebar displaying a smaller version of the current buffer on either the left or right side. It highlights the currently shown region and updates its position automatically.  Be aware that this minimap program does not work in Org documents.  This is not unusual though because I have tried several minimap programs and none of them can handle Org.
 
+This is disabled, pending removal, as Doom now uses =demap= by default using the same keybinding, and it handles Org documents a lot better.
+
 | COMMAND      | DESCRIPTION                               | KEYBINDING |
 |--------------+-------------------------------------------+------------|
 | minimap-mode | /Toggle minimap-mode/                       | SPC t m    |
 
 #+begin_src emacs-lisp
-(setq minimap-window-location 'right)
-(map! :leader
-      (:prefix ("t" . "toggle")
-       :desc "Toggle minimap-mode" "m" #'minimap-mode))
+; (setq minimap-window-location 'right)
+; (map! :leader
+;       (:prefix ("t" . "toggle")
+;        :desc "Toggle minimap-mode" "m" #'minimap-mode))
 #+end_src
 
 * MODELINE
@@ -1036,14 +1038,22 @@ Also re-renames other Org buffers so they reclaim base names when freed."
              (fboundp 'org-collect-keywords))
     (let ((title (cadr (assoc "TITLE" (org-collect-keywords '("TITLE"))))))
       (when title
-        (rename-buffer (generate-new-buffer-name title))
-        (dolist (buf (buffer-list))
-          (with-current-buffer buf
-            (when (and (derived-mode-p 'org-mode)
-                       (not (eq buf (current-buffer))))
-              (let ((other-title (cadr (assoc "TITLE" (org-collect-keywords '("TITLE"))))))
-                (when other-title
-                  (rename-buffer (generate-new-buffer-name other-title)))))))))))
+        ;; Skip if the current buffer name already matches the title
+        ;; (with or without a <N> suffix)
+        (unless (string-match-p (concat "^" (regexp-quote title) "\\(?:<[0-9]+>\\)?$")
+                                (buffer-name))
+          (rename-buffer (generate-new-buffer-name title))
+          ;; Re-evaluate all other Org buffers' names so they can
+          ;; drop stale <N> suffixes
+          (dolist (buf (buffer-list))
+            (with-current-buffer buf
+              (when (and (derived-mode-p 'org-mode)
+                         (not (eq buf (current-buffer))))
+                (let ((other-title (cadr (assoc "TITLE" (org-collect-keywords '("TITLE"))))))
+                  (when other-title
+                    (unless (string-match-p (concat "^" (regexp-quote other-title) "\\(?:<[0-9]+>\\)?$")
+                                            (buffer-name))
+                      (rename-buffer (generate-new-buffer-name other-title)))))))))))))
 
 ;; Rename on file open
 (add-hook 'find-file-hook #'rh/rename-org-buffer-to-title)
