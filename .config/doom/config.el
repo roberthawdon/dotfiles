@@ -607,6 +607,8 @@ it can be passed in POS."
     (require 'org-tempo)
 
     (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+    (add-to-list 'org-structure-template-alist '("sb" . "src bash"))
+    (add-to-list 'org-structure-template-alist '("sz" . "src zsh"))
     (add-to-list 'org-structure-template-alist '("sq" . "src sql"))
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("li" . "src lisp"))

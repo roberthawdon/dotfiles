@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2026-06-03 Wed 09:52]
+#+LAST-MODIFIED: [2026-06-03 Wed 16:54]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -1000,6 +1000,8 @@ Org-tempo allows for quick insertion of templates. Great for code blocks. I have
     (require 'org-tempo)
 
     (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+    (add-to-list 'org-structure-template-alist '("sb" . "src bash"))
+    (add-to-list 'org-structure-template-alist '("sz" . "src zsh"))
     (add-to-list 'org-structure-template-alist '("sq" . "src sql"))
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("li" . "src lisp"))
