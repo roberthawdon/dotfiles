@@ -122,7 +122,8 @@
 ;;          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))))
 (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
       doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
-      doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))
+      doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24)
+      doom-unicode-font (font-spec :family "Noto Sans Symbols 2"))
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))
@@ -545,6 +546,9 @@ it can be passed in POS."
 
   ;; Load our desired rh/gorg-colors-* theme on startup
   (rh/gorg-colors-doom-one)
+
+  ;; Load theme on new client frames (Daemon mode)
+  (add-hook 'server-after-make-frame-hook #'rh/gorg-colors-doom-one)
 )
 
 (setq org-journal-dir "~/Org/journal/"

@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2026-06-02 Tue 16:36]
+#+LAST-MODIFIED: [2026-06-03 Wed 09:52]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -325,7 +325,8 @@ I have also attempted to account for HiDPI displays by doubling the font size if
 ;;          doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))))
 (setq doom-font (font-spec :family "VictorMono Nerd Font" :size 12)
       doom-variable-pitch-font (font-spec :family "Annai MN" :size 15)
-      doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24))
+      doom-big-font (font-spec :family "VictorMono Nerd Font" :size 24)
+      doom-unicode-font (font-spec :family "Noto Sans Symbols 2"))
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))
@@ -897,6 +898,9 @@ I have created an interactive function for each color scheme (M-x rh/gorg-colors
 
   ;; Load our desired rh/gorg-colors-* theme on startup
   (rh/gorg-colors-doom-one)
+
+  ;; Load theme on new client frames (Daemon mode)
+  (add-hook 'server-after-make-frame-hook #'rh/gorg-colors-doom-one)
 )
 #+end_src
 
