@@ -551,11 +551,12 @@ it can be passed in POS."
   (add-hook 'server-after-make-frame-hook #'rh/gorg-colors-doom-one)
 )
 
-(setq org-journal-dir "~/Org/journal/"
-      org-journal-date-prefix "* "
-      org-journal-time-prefix "** "
-      org-journal-date-format "%B %d, %Y (%A) "
-      org-journal-file-format "%Y-%m-%d.org")
+(after! org-journal
+  (setq org-journal-dir "~/Org/journal/"
+        org-journal-date-prefix "* "
+        org-journal-time-prefix "** "
+        org-journal-date-format "%B %d, %Y (%A) "
+        org-journal-file-format "%Y-%m-%d.org"))
 
 (setq   org-highest-priority ?A
     org-default-priority ?C

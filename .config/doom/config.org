@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2026-06-03 Wed 16:54]
+#+LAST-MODIFIED: [2026-06-18 Thu 17:15]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -906,11 +906,12 @@ I have created an interactive function for each color scheme (M-x rh/gorg-colors
 
 ** Org-journal
 #+begin_src emacs-lisp
-(setq org-journal-dir "~/Org/journal/"
-      org-journal-date-prefix "* "
-      org-journal-time-prefix "** "
-      org-journal-date-format "%B %d, %Y (%A) "
-      org-journal-file-format "%Y-%m-%d.org")
+(after! org-journal
+  (setq org-journal-dir "~/Org/journal/"
+        org-journal-date-prefix "* "
+        org-journal-time-prefix "** "
+        org-journal-date-format "%B %d, %Y (%A) "
+        org-journal-file-format "%Y-%m-%d.org"))
 #+end_src
 
 ** Org Priorities
