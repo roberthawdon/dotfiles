@@ -5,3 +5,7 @@
 	excludesFile = ~/.gitignore
 [init]
 	defaultBranch = main
+[github]
+	user = roberthawdon
+[gitlab]
+	user = roberthawdon
