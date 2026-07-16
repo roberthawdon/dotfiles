@@ -689,3 +689,63 @@ Also re-renames other Org buffers so they reclaim base names when freed."
 (autoload 'vba-mode "vba-mode" "Turn a mode for VBA on." t nil)
 (setq auto-mode-alist
       (cons '("\\.vba?$" . vba-mode) auto-mode-alist))
+
+(after! persp-mode
+
+  (defun my/tab-bar-workspaces ()
+    "Return menu-item tuples for each workspace for use in tab-bar-format."
+    (let* ((names (cl-remove (or (bound-and-true-p persp-nil-name) "none")
+                             (persp-names)
+                             :test #'string=))
+           (current (safe-persp-name (get-current-persp))))
+      (when (> (length names) 1)
+        (mapcan
+         (lambda (name)
+           `((,(intern (concat "ws-" name))
+              menu-item
+              ,(propertize (format " %s " name)
+                           'face (if (equal name current)
+                                     '+workspace-tab-selected-face
+                                   '+workspace-tab-face))
+              (lambda ()
+                (interactive)
+                (persp-switch ,name)))))
+         names))))
+
+  (defun my/invisible-workspace ()
+    "Force tab bar redraws when workspace selection changes."
+    (propertize (safe-persp-name (get-current-persp)) 'invisible t))
+
+  (customize-set-variable 'tab-bar-format
+                          '(my/tab-bar-workspaces
+                            tab-bar-format-align-right
+                            my/invisible-workspace))
+
+  (defun my/tab-bar-click (event)
+    "Handle clicks on workspace tabs in the tab bar."
+    (interactive "e")
+    (let* ((item (tab-bar--event-to-item (event-start event)))
+           (binding (nth 1 item)))
+      (when (functionp binding)
+        (call-interactively binding))))
+
+  (defun my/tab-bar-update-visibility (&rest _)
+    "Show tab bar only when more than one workspace exists."
+    (set-frame-parameter
+     nil 'tab-bar-lines
+     (if (> (length (cl-remove (or (bound-and-true-p persp-nil-name) "none")
+                               (persp-names) :test #'string=))
+            1)
+         1 0)))
+
+  (add-hook 'persp-created-functions  #'my/tab-bar-update-visibility)
+  (add-hook 'persp-killed-functions   #'my/tab-bar-update-visibility)
+  (add-hook 'persp-activated-functions #'my/tab-bar-update-visibility))
+
+(setq tab-bar-show t)
+(run-at-time nil nil (cmd!
+                      (setq tab-bar-show t)
+                      (tab-bar-mode +1)
+                      (my/tab-bar-update-visibility)
+                      (keymap-set tab-bar-map "<down-mouse-1>" #'my/tab-bar-click)
+                      (keymap-set tab-bar-map "<mouse-1>"      #'my/tab-bar-click)))
