@@ -666,6 +666,9 @@ Also re-renames other Org buffers so they reclaim base names when freed."
       :desc "Add a buffer current perspective" "+" #'persp-add-buffer
       :desc "Remove perspective by name"       "-" #'persp-remove-by-name)
 
+(after! projectile
+(setq projectile-generic-command "fd . -0 --type f --color=never --strip-cwd-prefix"))
+
 ;; (setq initial-buffer-choice "~/.config/doom/start.org")
 ;;
 ;; (define-minor-mode start-mode

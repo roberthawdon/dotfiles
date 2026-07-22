@@ -4,7 +4,7 @@
 #+auto_tangle: t
 #+DESCRIPTION: Robert Hawdon's personal Doom Emacs config. With heavy insparation from Derek Taylor (https://gitlab.com/dwt1/dotfiles)
 #+STARTUP: showeverything
-#+LAST-MODIFIED: [2026-07-16 Thu 17:27]
+#+LAST-MODIFIED: [2026-07-22 Wed 10:19]
 
 * TABLE OF CONTENTS :toc:noexport:
 - [[#about-this-config][ABOUT THIS CONFIG]]
@@ -49,6 +49,7 @@
   - [[#rebuild-org-cache][Rebuild Org Cache]]
   - [[#rename-buffer-when-dealing-with-org-files-that-contain-a-title-tag][Rename buffer when dealing with Org files that contain a title tag]]
 - [[#perspective][PERSPECTIVE]]
+- [[#projectile][PROJECTILE]]
 - [[#start-page-currently-disabled][START PAGE (Currently disabled)]]
 - [[#title-bar][TITLE BAR]]
 - [[#vba-mode][VBA MODE]]
@@ -1090,6 +1091,16 @@ Manage multiple projects at once by harnessing the power of workspaces. Each per
       :desc "Switch to previous perspective"   "[" #'persp-prev
       :desc "Add a buffer current perspective" "+" #'persp-add-buffer
       :desc "Remove perspective by name"       "-" #'persp-remove-by-name)
+#+end_src
+
+* PROJECTILE
+There is a common issue using the =rg= command to index project in that if there's a dangling symlink, indexing will fail. Switching methods of indexing to use =fd= instead
+
+*Note, on Ubuntu this requires the =fd-find= package and a local symlink (e.g. =ln -s $(which fdfind) ~/bin/fd=) to function.*
+
+#+begin_src emacs-lisp
+(after! projectile
+(setq projectile-generic-command "fd . -0 --type f --color=never --strip-cwd-prefix"))
 #+end_src
 
 * START PAGE (Currently disabled)
