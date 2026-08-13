@@ -150,12 +150,13 @@
       :desc "Open directory in neotree"  "d n" #'neotree-dir)
 
 (map! :leader
-      :desc "Magit pull"   "g p" #'magit-pull
-      :desc "Magit push"   "g P" #'magit-push
-      :desc "Magit diff"   "g d" #'magit-diff
-      :desc "Magit log"    "g L" #'magit-log ;; Override Doom Emacs's default
-      :desc "Magit rebase" "g r" #'magit-rebase ;; Override Doom Emacs's default
-      :desc "Magit reset"  "g R" #'magit-reset) ;; Override Doom Emacs's default
+      :desc "Magit pull"         "g p" #'magit-pull
+      :desc "Magit push"         "g P" #'magit-push
+      :desc "Magit diff"         "g d" #'magit-diff
+      :desc "Magit log"          "g L" #'magit-log ;; Override Doom Emacs's default
+      :desc "Magit rebase"       "g r" #'magit-rebase ;; Override Doom Emacs's default
+      :desc "Magit reset"        "g R" #'magit-reset ;; Override Doom Emacs's default
+      :desc "Magit amend commit" "g A" #'magit-commit-amend)
 
 (setq auth-sources '("~/.authinfo"))
 (map! :leader
