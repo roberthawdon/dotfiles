@@ -31,6 +31,127 @@
        :desc "Clippy describes function under point" "f" #'clippy-describe-function
        :desc "Clippy describes variable under point" "v" #'clippy-describe-variable))
 
+(require 'xterm-color)
+
+(defvar-local xterm-color-toggle--overlays nil
+  "List of overlays used to render ANSI colours without modifying the buffer.")
+
+(defvar-local xterm-color-toggle--active nil
+  "Non-nil when xterm-color-toggle is currently rendering ANSI sequences.")
+
+(defun xterm-color-toggle--make-invisible (esc-start esc-end)
+  "Create an invisible overlay from ESC-START to ESC-END and record it."
+  (let ((ov (make-overlay esc-start esc-end)))
+    (overlay-put ov 'invisible t)
+    (overlay-put ov 'xterm-color-toggle t)
+    (push ov xterm-color-toggle--overlays)))
+
+(defun xterm-color-toggle--skip-escapes (esc-re)
+  "Skip over any escape sequences at point, creating invisible overlays.
+ESC-RE is a regex matching complete escape sequences.
+Leaves point after the last escape sequence."
+  (while (looking-at esc-re)
+    (xterm-color-toggle--make-invisible (match-beginning 0) (match-end 0))
+    (goto-char (match-end 0))))
+
+(defun xterm-color-toggle--apply ()
+  "Render ANSI sequences in the current buffer using xterm-color's engine.
+All escape sequences are hidden with overlays.  Colour faces from
+xterm-color-filter are mapped back onto the original buffer positions
+as overlays.  The buffer text is never modified."
+  (unless xterm-color--face-cache
+    (setq xterm-color--face-cache (make-hash-table :weakness 'value)))
+  (unless xterm-color--truecolor-face-cache
+    (setq xterm-color--truecolor-face-cache (make-hash-table :weakness 'value)))
+  (let* ((orig-text       (buffer-substring-no-properties (point-min) (point-max)))
+         (saved-state     xterm-color--state)
+         (saved-fg        xterm-color--current-fg)
+         (saved-bg        xterm-color--current-bg)
+         (saved-attrs     xterm-color--attributes)
+         (saved-char-list xterm-color--char-list)
+         (saved-csi-list  xterm-color--CSI-list)
+         (face-prop       (if font-lock-mode 'font-lock-face 'face))
+         colored)
+    (setq xterm-color--state     :char
+          xterm-color--current-fg nil
+          xterm-color--current-bg nil
+          xterm-color--attributes 0
+          xterm-color--char-list  nil
+          xterm-color--CSI-list   nil)
+    (setq colored (xterm-color-filter orig-text))
+    (setq xterm-color--state     saved-state
+          xterm-color--current-fg saved-fg
+          xterm-color--current-bg saved-bg
+          xterm-color--attributes saved-attrs
+          xterm-color--char-list  saved-char-list
+          xterm-color--CSI-list   saved-csi-list)
+    (let ((col-pos  0)
+          (col-len  (length colored))
+          (buf-pos  (point-min))
+          (esc-re   (concat "\x1b\\(?:"
+                            "\\[[^@-~]*[@-~]"
+                            "\\|][^\x07\x1b]*\\(?:\x07\\|\x1b\\\\\\)"
+                            "\\|."
+                            "\\)"))
+          (modified (buffer-modified-p)))
+      (save-excursion
+        (while (< col-pos col-len)
+          (let* ((face     (get-text-property col-pos face-prop colored))
+                 (run-end  (or (next-single-property-change col-pos face-prop colored)
+                               col-len))
+                 (run-chars (- run-end col-pos)))
+            (goto-char buf-pos)
+            ;; Skip any escape sequences before the visible chars of this run
+            (xterm-color-toggle--skip-escapes esc-re)
+            (let ((run-buf-start (point))
+                  (chars-left run-chars))
+              ;; Consume run-chars visible characters, hiding any embedded escapes
+              (while (> chars-left 0)
+                (if (looking-at esc-re)
+                    (progn
+                      (xterm-color-toggle--make-invisible
+                       (match-beginning 0) (match-end 0))
+                      (goto-char (match-end 0)))
+                  (forward-char 1)
+                  (setq chars-left (1- chars-left))))
+              ;; Apply face overlay for this run
+              (when (and face (> (point) run-buf-start))
+                (let ((ov (make-overlay run-buf-start (point))))
+                  (overlay-put ov face-prop face)
+                  (overlay-put ov 'xterm-color-toggle t)
+                  (push ov xterm-color-toggle--overlays)))
+              ;; Mop up any trailing escape sequences before the next run
+              (xterm-color-toggle--skip-escapes esc-re)
+              (setq buf-pos (point)))
+            (setq col-pos run-end))))
+      (restore-buffer-modified-p modified))))
+
+(defun xterm-color-toggle--remove ()
+  "Delete all overlays created by `xterm-color-toggle--apply'."
+  (mapc #'delete-overlay xterm-color-toggle--overlays)
+  (setq xterm-color-toggle--overlays nil))
+
+;;;###autoload
+(defun xterm-color-toggle ()
+  "Toggle ANSI colour rendering in the current buffer using xterm-color.
+When enabled, ANSI escape sequences are hidden and 256-colour / true-colour
+faces are applied via overlays.  The raw escape characters remain in the
+buffer and are instantly restored when toggled off.  The buffer is never
+modified."
+  (interactive)
+  (cond
+   (xterm-color-toggle--active
+    (xterm-color-toggle--remove)
+    (setq xterm-color-toggle--active nil)
+    (message "xterm-color-toggle: OFF (escape sequences visible)"))
+   (t
+    (xterm-color-toggle--apply)
+    (setq xterm-color-toggle--active t)
+    (message "xterm-color-toggle: ON"))))
+
+(map! :leader
+       :desc "Colourise ANSI escaped text" "t a" #'xterm-color-toggle)
+
 (map! :leader
       (:prefix ("d" . "dired")
        :desc "Open dired" "d" #'dired
