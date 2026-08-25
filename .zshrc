@@ -17,6 +17,11 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
+# Configure pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -77,7 +82,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(sudo macos git history tmux kubectl zsh-autosuggestions zsh-syntax-highlighting ohmyzsh-full-autoupdate)
+plugins=(sudo macos git history tmux kubectl zsh-autosuggestions zsh-syntax-highlighting ohmyzsh-full-autoupdate pyenv)
 
 ZSH_TMUX_AUTOSTART=true
 # ZSH_TMUX_ITERM2=true
