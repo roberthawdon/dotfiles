@@ -1,4 +1,12 @@
+# Example unsynced config. I have included an example of remapping key when using
+# the following to "Macify" Linux, and have a special override in place to set
+# Ghostty to use default keybindings:
+#
+# Mac keyboard: https://github.com/stevenilsen123/mac-keyboard-behavior-in-linux
+# Overriding: Coming Soon (or later, when I inevitably rediscover this comment in
+# many years time! - RH 2026-09-01 )
+#
 # Keyboard Remapping
-keybind = super+v=paste_from_clipboard
-keybind = super+c=copy_to_clipboard
+# keybind = super+v=paste_from_clipboard
+# keybind = super+c=copy_to_clipboard
 
