@@ -1,0 +1,26 @@
+# Keyd override examples when "Macifying" a Linux system targeting
+# Ghostty and Emacs:
+# https://github.com/stevenilsen123/mac-keyboard-behavior-in-linux
+#
+# [emacs]
+# 
+# main.leftcontrol = layer(control)
+# main.rightcontrol = layer(control)
+# main.leftmeta = layer(meta)
+# main.rightmeta = layer(meta)
+# 
+# # Keep meta+tab and meta+` swapped (as per global config)
+# meta.tab = C-tab
+# meta.102nd = C-102nd
+# 
+# [com-mitchellh-ghostty]
+# 
+# main.leftcontrol = layer(control)
+# main.rightcontrol = layer(control)
+# main.leftmeta = layer(meta)
+# main.rightmeta = layer(meta)
+# 
+# # Keep meta+tab and meta+` swapped (as per global config)
+# meta.tab = C-tab
+# meta.102nd = C-102nd
+# 
