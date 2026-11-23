@@ -108,7 +108,7 @@ alias vi=nvim
 alias vim=nvim
 alias ec="emacsclient --create-frame"
 alias emacs="emacsclient -nw"
-alias ls="eza --icons --git"
+alias ls="eza -g --icons --git"
 
 # A handy dotfiles repo trick from: https://www.atlassian.com/git/tutorials/dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
